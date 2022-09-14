@@ -1,3 +1,3 @@
-function aaCas1 = aa(pos, ar, va, Lambda)
-    aaCas1 = zeros(3,1);
+function aaOut = aa(pos, ar, va, Lambda)
+    aaOut = zeros(3,1);
 endfunction
