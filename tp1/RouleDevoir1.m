@@ -1,6 +1,6 @@
 clear
 %
-% Procedure servant ра rouler le devoir 1
+% Procedure servant a rouler le devoir 1
 %
 % Cas 1
 posCas1=[0;0;0];
