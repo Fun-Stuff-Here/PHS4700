@@ -8,7 +8,7 @@ acmCas1=[0;0;0];
 arCas1=0.0;
 vaCas1=[0;0;0];
 lambdaCas1=[1; 1; 1; 1; 1; 1];
-[pcmCas1 acmCas1 MICas1 aaCas1]=Devoir1(posCas1,arCas1,vaCas1,lambdaCas1);
+[pcmCas1 acmCas1 MICas1 aaCas1] = Devoir1(posCas1,arCas1,vaCas1,lambdaCas1);
 fprintf('\nCas 1\nConditions Cas 1\n');
 fprintf('  Position drone (m) = ( %10.5f,  %10.5f,  %10.5f )\n',posCas1(1),posCas1(2),posCas1(3));
 fprintf('  Rotation drone (r) = %10.5f\n',arCas1);
