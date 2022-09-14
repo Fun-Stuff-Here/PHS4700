@@ -1,3 +1,3 @@
-function MIOut = MI(pos, ar, va, Lambda)
+function MIOut = MI(context)
     MIOut = zeros(3,3);
 endfunction
