@@ -10,7 +10,7 @@ function [pcmOut acmOut MIOut aaOut] = Devoir1(pos, ar, va, Lambda)
 
   % Constante du probleme
   context.F_max  = 20; % N
-  context.m_s = 15; % kg
+  context.m_s = 1.5; % kg
   context.R_s = 30E-2; % m
   context.L_b = 50E-2; % m
   context.m_b = 0.2; % kg
