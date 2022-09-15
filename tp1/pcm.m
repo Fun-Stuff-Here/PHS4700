@@ -1,4 +1,8 @@
 function pcmOut = pcm(context)
+    cmd_local = cdm_local(context)
+endfunction
+
+function cdm_local = cdm_local(context)
     drone = {};
     drone.pos = context.pos;
     drone.masse = context.m_s;
@@ -8,5 +12,19 @@ function pcmOut = pcm(context)
     z_cdm = pi * drone.masse_volumique * drone.rayon ^ 4 / (4 * drone.masse);
     drone.CDM = [0; 0; z_cdm];
 
-    pcmOut = drone.CDM; % Ajuster avec le CDM des bras/moteurs et du Colis
+    bras = {};
+    bras.CDM = [0; 0; 0];
+    bras.masse = 6 * context.m_b;
+
+    moteurs = {};
+    moteur.masse = 6 * context.m_m;
+    z_cdm = (1/2) * context.H_m;
+    moteur.CDM = [0; 0; z_cdm];
+
+    colis = {};
+    colis.masse = context.m_c;
+    colis.CDM = context.r_c;
+
+
+    cdm_local = (1/(drone.masse + bras.masse + moteur.masse + colis.masse)) *(drone.masse * drone.CDM + bras.masse * bras.CDM + moteur.masse * moteur.CDM + colis.masse * colis.CDM); % Ajuster avec le CDM des bras/moteurs et du Colis
 endfunction
