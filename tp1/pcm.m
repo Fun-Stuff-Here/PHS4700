@@ -1,5 +1,6 @@
 function pcmOut = pcm(context)
-    cmd_local = cdm_local(context)
+    cdm_local = cdm_local(context);
+    pcmOut = local_a_global(cdm_local, context);
 endfunction
 
 function cdm_local = cdm_local(context)
@@ -26,5 +27,9 @@ function cdm_local = cdm_local(context)
     colis.CDM = context.r_c;
 
 
-    cdm_local = (1/(drone.masse + bras.masse + moteur.masse + colis.masse)) *(drone.masse * drone.CDM + bras.masse * bras.CDM + moteur.masse * moteur.CDM + colis.masse * colis.CDM); % Ajuster avec le CDM des bras/moteurs et du Colis
+    cdm_local = (1/(drone.masse + bras.masse + moteur.masse + colis.masse)) *(drone.masse * drone.CDM + bras.masse * bras.CDM + moteur.masse * moteur.CDM + colis.masse * colis.CDM);
+endfunction
+
+function cdm_global = local_a_global(cdm_local, context)
+    cdm_global = cdm_local; % TODO faire la transformation
 endfunction
