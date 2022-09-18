@@ -31,5 +31,10 @@ function cdm_local = cdm_local(context)
 endfunction
 
 function cdm_global = local_a_global(cdm_local, context)
-    cdm_global = cdm_local; % TODO faire la transformation
+    theta = context.ar;
+    R = [cos(theta) 0 sin(theta);
+        0 1 0;
+        -sin(theta) 0 cos(theta)];
+    ajustement_rotation = R * cdm_local;
+    cdm_global = context.pos + ajustement_rotation;
 endfunction
