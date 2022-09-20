@@ -25,9 +25,11 @@ function [pcmOut acmOut MIOut aaOut] = Devoir1(pos, ar, va, Lambda)
   context.H_c = 0.3; % m direction oz
   context.r_c = [0; 0.1; -0.15] % m
   context.g = [0; 0; -9.81] % m/s^2
+  context.theta_b = (2*pi)/6; % rad (6 bras repartir equitablement)
   % Fin Constante du probleme
 
   % Resultat
+  context.cdm_local = cdm_local(context); % position du centre de masse dans referentiel Drone
   context.pcm = pcm(context);
   context.acm = acm(context);
   context.MI = MI(context);
