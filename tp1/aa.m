@@ -1,11 +1,10 @@
 function aaOut = aa(context)
 
-    % Calcul en referenciel du drone
-    % Force en jeu, poid, moteur
-    ForceMoteur_CM = [0; 0; sum(context.Lambda * context.F_max)]
+    R_i = PositionMoteurMatrix(context);
+    F_i = ForceMatrixForMotor(context);
+    t_cm = MomentForceAuCentreDeMasse(R_i, F_i);
+    L = context.MI * context.va;
 
-%    TorqueMoteur_CM = 
-
-
-    aaOut = zeros(3,1);
+    aa_local = inv(context.MI) * (t_cm + cross(L, context.va));
+    aaOut = LocalToGobalReferentiel(context, aa_local);
 endfunction
