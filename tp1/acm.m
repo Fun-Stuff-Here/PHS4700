@@ -38,6 +38,6 @@ function acmOut = acm(context)
                    + force_gravitationnelle_drone;
 
   % Calcul pour trouver l'accélération du centre de masse
-    acmOut = force_resultante / masse_totale;
+  acmOut = force_resultante / masse_totale;
 
 endfunction

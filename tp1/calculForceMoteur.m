@@ -8,7 +8,7 @@ function forceMoteur = calculForceMoteur(lambda_i)
     vecteur_unitaire_z = [0; 0; 1]
   
     % Calcul pour trouver la force du moteur
-    force = lambda_i * force_maximale_moteur * vecteur_unitaire_z;
+    forceMoteur = lambda_i * force_maximale_moteur * vecteur_unitaire_z;
   
-  endfunction
+endfunction
   
