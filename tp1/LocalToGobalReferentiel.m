@@ -22,7 +22,7 @@ function v = LocalToGobalReferentiel(context, v)
     %Calul de la rotation rvr*
     quat_v_rotated = ProduitHamiltonien(ProduitHamiltonien(quat_r, quat_v), quat_r_conjuger);
 
-    assert(quat_v_rotated(1) == 0); % On s'assure que le quaternion est bien un vecteur
+    assert(quat_v_rotated(1) < 1E-5 && quat_v_rotated(1) > -1E-5); % On s'assure que le quaternion est bien un vecteur
     v_rotated = [   quat_v_rotated(2);
                     quat_v_rotated(3);
                     quat_v_rotated(4)]; % vecteur rotationné
