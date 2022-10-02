@@ -1,0 +1,57 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\begin{document}
+
+\section{Centre de masse}
+Le centre de masse est un point de masse «moyen». En prenant la densité de chaque morceau infinitésimal d’un objet multiplié la la position du morceau, on obtient le point du centre de masse
+$$r_{CDM}=\frac{1}{m}\int_V \vec{r}\rho (\vec{r}) d^3 r$$
+
+\subsection{drone}
+Par symétrie, on peut voir que le centre de masse du drone dans son référentiel local est 0 en x et en y. Ce n’est pas 0 zéro en z car le drone est représenté par une demi sphère, et non une sphère complète. 
+
+puisque faire le calcul du centre de masse d'un objet spérique est compliqué en coordonnées cartésienne, nous alors utiliser les coordonnées spériques pour trouver l'expression du centre de masse en z:
+
+$$z_{CDM} = \frac{1}{m}\int_Vz\rho dV$$
+Avec $\rho = \frac{m}{V}$ une constante, $dV = r^2\sin\phi drd\theta d\phi$ et $z=r\cos\phi$.
+
+Pour couvrir la région occupé par la demi sphère, nous devons couvrir de $\phi=[0, \pi/2]$ sur tout un tour complet ($\theta=[0, 2\pi]$) d'un rayon partant de 0 jusqu'au rayon de la demi sphère de $R_s$:
+
+$$z_{CDM} = \frac{\rho}{m}\int_0^{\frac{\pi}{2}}\int_0^{2\pi}\int_0^{R_s} (r\cos\phi)r^2\sin\phi drd\theta d\phi$$
+$$z_{CDM} = \frac{\rho\theta |_0^{2\pi}}{m}\int_0^{\frac{\pi}{2}}\int_0^{R_s}\cos\phi\sin\phi drd\phi$$
+$$z_{CDM} = \frac{2\pi\rho}{m} \left.\frac{r^4}{4} \right|_0^{R_s}
+\left.\frac{\sin^2\phi}{2} \right|_0^{\frac{\pi}{2}}$$
+$$z_{CDM} = \frac{2\pi\rho}{m} \frac{R_s^4}{4} \frac{1}{2}$$
+
+\subsection{Bras}
+La position en Z des bras tourne autour de 0, alors le CDM en z des bras est 0. Par symétrie, le CDM en x et en y est aussi de 0.
+
+\subsection{Moteurs}
+Par symétrie, le CDM en x et en y des moteurs est de 0. En z, le CDM est égal à la moitié de sa hauteur
+
+\subsection{Colis}
+C'est donnée dans l'énoncé
+\subsection{Centre de masse local}
+Le centre de masse local est donnée par la la moyenne des centre de masse de chaque sous objet.
+$$r_{CDM_{local}} = \frac{\displaystyle\sum_i^n r_{CDM_{i}}m_i}{\displaystyle\sum_i^n m_i} $$
+
+\subsection{Rotation}
+Une fois qu'on a le CDM du drône + colis dans son référentiel local, il faut appliquer la rotation nécessaire pour que les axes des x, y, et z du référentiel local et global soit parallèle. Dans notre cas, nous avons uniquement besoins de calculer des rotations autrour de l'axe de y:
+$$r_{CDM_{local_{tourné}}} = R_y(\theta_y)r_{CDM_{local}} $$
+Avec 
+
+\begin{equation}
+R_y(\theta_y) = 
+    \begin{bmatrix}
+        \cos\theta_y  & 0   & \sin\theta_y \\
+        0             & 1   & 0 \\
+        -\sin\theta_y & 0   & \cos\theta_y \\
+    \end{bmatrix}
+\end{equation}
+
+\subsection{Tranlation}
+Maintant que nous avons le centre de masse local orienté dans le même sens que le système d'axe du référentiel global, il nous reste qu'à faire la tranlation nécessaire pour obtenir le centre de masse exprimé selon le référentiel global.
+Pour avoir la position de $A\rightarrow C = A\rightarrow B + B\rightarrow C$, avec $A$ étant le zéro du référentiel global, $B$ étant le zéro du référentiel local et $C$ étant la position du centre de masse par rapport au référentiel local:
+$$r_{CDM_{global}} = pos + r_{CDM_{local_{tourné}}}$$
+
+\end{document}
