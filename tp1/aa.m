@@ -2,9 +2,9 @@ function aaOut = aa(context)
 
     R_i = PositionMoteurMatrix(context);
     F_i = ForceMatrixForMotor(context);
-    t_cm = MomentForceAuCentreDeMasse(R_i, F_i);
-    L = context.MI * context.va;
+    t_cm = LocalToGobalReferentiel(context, MomentForceAuCentreDeMasse(R_i, F_i));
+    L = LocalToGobalReferentiel(context, context.MI * context.va);
+    va = LocalToGobalReferentiel(context, context.va);
 
-    aa_local = inv(context.MI) * (t_cm + cross(L, context.va));
-    aaOut = LocalToGobalReferentiel(context, aa_local);
+    aaOut = inv(context.MI) * (t_cm + cross(L, va));
 endfunction
