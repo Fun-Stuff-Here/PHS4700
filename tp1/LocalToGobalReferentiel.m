@@ -1,4 +1,4 @@
-function v = LocalToGobalReferentiel(context, v)
+function v = LocalToGobalReferentielRotation(context, v)
     u_hat = [   0;
                 1;
                 0]; % rotation est seulement autour de l'axe y
@@ -28,5 +28,5 @@ function v = LocalToGobalReferentiel(context, v)
                     quat_v_rotated(4)]; % vecteur rotationné
 
     % Calcul de la translation
-    v = v_rotated + context.pos;
+    v = v_rotated;
 endfunction

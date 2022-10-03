@@ -8,8 +8,8 @@ function MIOut = MI(context)
 
     theta = context.ar;
     R = [cos(theta) 0 sin(theta);
-       0 1 0;
-       -sin(theta) 0 cos(theta)];
-    ajustement_rotation = R * I_total_local;
-    MIOut =I_total_local;
+        0 1 0;
+        -sin(theta) 0 cos(theta)];
+    ajustement_rotation = R * I_total_local * inv(R);
+    MIOut = ajustement_rotation;
 endfunction
