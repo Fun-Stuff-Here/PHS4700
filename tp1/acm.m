@@ -42,21 +42,21 @@ function acmOut = acm(context)
   force_moteur6_rotation = matrice_rotation * force_moteur6;
 
   % Calcul pour trouver l'accélération du centre de masse
-  acmOut_X = force_moteur1_rotation(1) 
+  force_moteur_X = force_moteur1_rotation(1) 
             + force_moteur2_rotation(1)
             + force_moteur3_rotation(1)
             + force_moteur4_rotation(1)
             + force_moteur5_rotation(1) 
             + force_moteur6_rotation(1);
 
-  acmOut_Y = force_moteur1_rotation(2) 
+  force_moteur_Y = force_moteur1_rotation(2) 
             + force_moteur2_rotation(2) 
             + force_moteur3_rotation(2) 
             + force_moteur4_rotation(2) 
             + force_moteur5_rotation(2)
             + force_moteur6_rotation(2);
 
-  acmOut_Z = force_moteur1_rotation(3) 
+  force_moteur_Z = force_moteur1_rotation(3) 
             + force_moteur2_rotation(3)
             + force_moteur3_rotation(3) 
             + force_moteur4_rotation(3) 
@@ -64,6 +64,6 @@ function acmOut = acm(context)
             + force_moteur6_rotation(3) 
             + force_gravitationnelle_totale;
 
-  acmOut = [acmOut_X; acmOut_Y; acmOut_Z] / masse_totale;
+  acmOut = [force_moteur_X; force_moteur_Y; force_moteur_Z] / masse_totale;
 
 endfunction
