@@ -6,11 +6,7 @@ function I_sphere= I_sphere(context) %calcul moment d'inertie du droneen referen
   I_2_sphere = R*Ic*transpose(R);
   dc =  cdm_local(context)-cdm_s;
   Id = id_matrix(dc);
-<<<<<<< HEAD
   % translation
   I_sphere = I_2_sphere + Id*context.m_s;
-=======
-  I_sphere = Ic + Id*context.m_s;
->>>>>>> 8a0531fe4cd1ec29875cfe962dcbbff64a07fdd5
 
   endfunction
