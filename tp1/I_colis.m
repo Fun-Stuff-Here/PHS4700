@@ -9,8 +9,8 @@ function I_colis= I_colis(context)
   dc = cdm_local(context) - cdm_colis;
   Id = id_matrix(dc);%translation des axes
 
-   R = roty(context.ar);  % matrice de rotation y
-   I_2_colis= R*Ic*transpose(R);
+  R = roty(context.ar);  % matrice de rotation y
+  I_2_colis= R*Ic*transpose(R);
 
   I_colis = I_2_colis + context.m_b * Id;
 
