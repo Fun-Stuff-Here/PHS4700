@@ -1,3 +1,8 @@
 
 tp1/.vscode/
 .vscode/
+*.log
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
