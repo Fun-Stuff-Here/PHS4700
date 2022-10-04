@@ -22,7 +22,7 @@ function I_moteurs= I_moteurs(context)
     % M2
     %moment d'inertie par rapport aux axes
     I_zz = (context.m_m  /2)*(context.R_m)^2;
-    I_xx_yy = (context.m_m  /4)*(context.R_m)^2 + (context.m_m  /12)*(context.H_m)^2;
+    I_xx_yy = ((context.m_m  /4)*(context.R_m)^2) + ((context.m_m  /12)*(context.H_m)^2);
 
     Ic = diag([I_xx_yy;I_xx_yy;I_zz])  ; %tensor
 
