@@ -1,3 +1,6 @@
 function MIOut = MI(context)
-    MIOut = zeros(3,3);
+
+    %  Additionde tous les moment d'inertie
+    MIOut= I_sphere(context) + I_bras(context) + I_moteurs(context)+ I_colis(context);
+
 endfunction
