@@ -27,10 +27,10 @@ function [delta_q] =  g(q, t)
 
     a = Acceleration(contexte);
     alpha = AccelerationAngulaire(contexte);
-    delta_R = [ (-q(7) * q(5)) /2;
-                ( q(6) * q(5)) /2;
-                ( q(9) * q(5)) /2;
-                (-q(8) * q(5)) /2;
+    delta_R = [ (-contexte.R(2) * contexte.omega(1)) /2;
+                ( contexte.R(1) * contexte.omega(1)) /2;
+                ( contexte.R(4) * contexte.omega(1)) /2;
+                (-contexte.R(3) * contexte.omega(1)) /2;
     ];
 
     delta_m = 0;
