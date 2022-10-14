@@ -5,9 +5,9 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon, stopCondition, g)
 %   epsilon   : vecteur précision pour chaque variable
 %   g         : membre de droite de ED. 
 %  stopCondition : condition d'arret de la simulation
-%   vf_y      : valeur finale de la vitese en y
-%   vf_z      : valeur finale de la vitese en z
+%   vf     : valeur finale de la vitese
 %   t         : vecteur des temps
+%   x         : vecteur des positions en x
 %   y         : vecteur des positions en y
 %   z         : vecteur des positions en z
 
