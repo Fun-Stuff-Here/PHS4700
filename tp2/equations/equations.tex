@@ -6,51 +6,67 @@
 \begin{equation}
 \vec{q}(t) = 
 \begin{bmatrix}
-    v_x(t) \quad(1)\\
-    v_y(t) \quad(2)\\
-    v_z(t) \quad(3)\\
-    x(t) \quad(4)\\
-    y(t) \quad(5)\\
-    z(t) \quad(6)\\
-    \omega_x(t) \quad(7)\\
-    \omega_y(t) \quad(8)\\
-    \omega_z(t) \quad(9)\\
-    \vec{\vec{R}}_1(t) \quad(10)\\
-    \vec{\vec{R}}_2(t) \quad(11)\\
-    \vec{\vec{R}}_3(t) \quad(12)\\
-    \vec{\vec{R}}_4(t) \quad(13)\\
-    m(t) \quad(14)\\
+    v_y(t) & (1)\\
+    v_z(t) & (2)\\
+    y(t) & (3)\\
+    z(t) & (4)\\
+    \omega_x(t) & (5)\\
+    \vec{\vec{R}}_1(t) & (6)\\
+    \vec{\vec{R}}_2(t) & (7)\\
+    \vec{\vec{R}}_3(t) & (8)\\
+    \vec{\vec{R}}_4(t) & (9)\\
+    m(t) & (10)\\
 \end{bmatrix}
-, 
+\end{equation}
+\begin{equation}
 \vec{q}(0) = 
 \begin{bmatrix}
-    v_x(0)  \\
     v_y(0)  \\
     v_z(0)  \\
-    x(0) \\
     y(0) \\
     z(0) \\
     \omega_x(0) \\
-    \omega_y(0) \\
-    \omega_z(0) \\
     \vec{\vec{R}}_1(0) \\
     \vec{\vec{R}}_2(0) \\
     \vec{\vec{R}}_3(0) \\
     \vec{\vec{R}}_4(0) \\
     m(0) \\
 \end{bmatrix}
-,
-    \vec{g}(t) =
+=
 \begin{bmatrix}
-    \frac{v_x(t)}{dt} \\
+    0 & \frac{m}{s}\\
+    0 & \frac{m}{s}\\
+    0 & m\\
+    R_T + d & m \\
+    0 & \frac{rad}{s} \\
+    \cos(\frac{\beta}{2}) & \\
+    \sin(\frac{\beta}{2}) & \\
+    0 & \\
+    0 & \\
+    M_i & kg \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    0 & \frac{m}{s}\\
+    0 & \frac{m}{s}\\
+    0 & m\\
+    6 371 025 & m \\
+    0 & \frac{rad}{s} \\
+    1 &  \\
+    0 &  \\
+    0 & \\
+    0 & \\
+    320 000 & kg \\
+\end{bmatrix}
+\end{equation}
+\begin{equation}
+\vec{g}(t) = 
+\begin{bmatrix}
     \frac{v_y(t)}{dt} \\
     \frac{v_z(t)}{dt} \\
-    \frac{x(t)}{dt} \\
     \frac{y(t)}{dt} \\
     \frac{z(t)}{dt} \\
     \frac{\omega_x(t)}{dt} \\
-    \frac{\omega_y(t)}{dt} \\
-    \frac{\omega_z(t)}{dt} \\
     \frac{\vec{\vec{R}}_1(t)}{dt} \\
     \frac{\vec{\vec{R}}_2(t)}{dt} \\
     \frac{\vec{\vec{R}}_3(t)}{dt} \\
@@ -59,37 +75,19 @@
 \end{bmatrix}
 =
 \begin{bmatrix}
-    a_x \\
     a_y \\
     a_x \\
-    v_x \\
     v_y \\
     v_z \\
     \alpha_x \\
-    \alpha_y \\
-    \alpha_z \\
     \frac{\vec{\vec{R}}(t)\vec{\vec{\omega}}(t)}{2}_1 \\
     \frac{\vec{\vec{R}}(t)\vec{\vec{\omega}}(t)}{2}_2 \\
     \frac{\vec{\vec{R}}(t)\vec{\vec{\omega}}(t)}{2}_3 \\
     \frac{\vec{\vec{R}}(t)\vec{\vec{\omega}}(t)}{2}_4 \\
-    -\mu \\
-\end{bmatrix}
-=
-\begin{bmatrix}
-    a_x \\
-    a_y \\
-    a_x \\
-    q_1 \\
-    q_2 \\
-    q_3 \\
-    \alpha_x \\
-    \alpha_y \\
-    \alpha_z \\
-    \frac{-q_{11}q_7 - q_{12}q_8 - q_{13}q_9}{2} \\
-    \frac{q_{10}q_7 + q_{12}q_9 - q_{13}q_8}{2} \\
-    \frac{q_{10}q_8 + q_{13}q_7 - q_{11}q_9}{2} \\
-    \frac{q_{10}q_9 + q_{11}q_8 - q_{12}q_7}{2} \\
-    -\mu \\
+    \begin{cases}
+        -\mu \text{ si m } > M_i - M_{carburant}\\
+        0 \text{ si m } <= M_i - M_{carburant}\\
+    \end{cases} \\
 \end{bmatrix}
 \end{equation}
 

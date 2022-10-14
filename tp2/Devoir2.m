@@ -14,16 +14,24 @@ function [Vf t x y z] = Devoir2(theta)
     fusee.RAYON = 1.8; % En mètres
     fusee.V_GAZ = 3.5 * (10 ** 3); % En mètres / secondes
     fusee.MASSE_CARBURANT_INITIAL = 270 * (10 ** 3); % En kg
-    fusee.POS_PROPULSEUR = [0;0;-25]; % [x;y;z] en mètres par rapport au CDM de la fusée
+    fusee.POS_PROPULSEUR = [0; 0;-25]; % [x;y;z] en mètres par rapport au CDM de la fusée
     fusee.DEBIT_MASSIQUE_GAZ = 1200; % Kg/s
     fusee.COEFF_TRAINEE = 0.5; % Pas d'unité à ce que je sache;
 
 
     % TODO Mettre des valeurs pas Bidons à ces valeurs
-    Vf = [0;0;0];
-    t = [];
-    x = [];
-    y = [];
-    x = [];
+    epsilon = [ inf; % erreur sur v_y
+                inf; % erreur sur v_z
+                10; % erreur sur y
+                10; % erreur sur z
+                inf; % erreur sur w_x
+                inf; % erreur sur R_1
+                inf; % erreur sur R_2
+                inf; % erreur sur R_3
+                inf; % erreur sur R_4
+                inf; % erreur sur m
+];
+
+    [Vf t x y z] = SimulationParContrainte(q_0, epsilon, stopCondition)
 
 endfunction

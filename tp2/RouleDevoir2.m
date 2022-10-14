@@ -1,0 +1,1 @@
+[Vf t x y z] = Devoir2(0)
