@@ -11,8 +11,9 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon, stopCondition, g)
 %   y         : vecteur des positions en y
 %   z         : vecteur des positions en z
 
-DeltaT = 0.01;
+% le nombre de pas de temps et delta t minimum
 n_deltaT = 100;
+DeltaT = 1/n_deltaT;
 
 while(true)
     % -------------------------------Simulation ---------------------------------------------
@@ -47,13 +48,15 @@ while(true)
         end
     end
 
-    n_deltaT = 2*length(t);
-    DeltaT = t_i/n_deltaT;
-
+    % si erreur comis < epsilon alors on arrete la simulation
     if(erreurEstValide)
         vf = [0; q_i(1); q_i(2)];
         break;
     end
+
+    % sinon on augmente le nombre de pas de temps et diminue delta t
+    n_deltaT = 2*length(t);
+    DeltaT = t_i/n_deltaT;
 end
 
 endfunction
