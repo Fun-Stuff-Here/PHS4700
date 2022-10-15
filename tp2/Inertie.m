@@ -1,5 +1,7 @@
-function I = Inertie(masse, contextFusee)
+function I = Inertie(masse)
     % Example usage:
     % I = Inertia(100, contexte.fusee);
-    I = masse * ( (contextFusee.RAYON^2) / 2 ) + ( (contextFusee.HAUTEUR^2) / 12);
+    rayon = 1.8; % de la fusée, en mètres
+    hauteur = 53; % de la fusée, en mètre
+    I = masse * ( (rayon^2) / 2 ) + ( (hauteur^2) / 12);
 endfunction
