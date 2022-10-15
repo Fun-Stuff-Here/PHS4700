@@ -1,3 +1,3 @@
-function I = Inertie(masse, context)
+function I = Inertie(masse, contextFusee)
     I = 0;
 endfunction
