@@ -6,13 +6,12 @@ function f = F_propulsion_locale(context)
     context = {};
     context.theta = 0.2;
     context.mu = 1200;
+    context.v_gaz = 3.5 * 10 ^ 3 ; % module de la vitesse en m/x
 
-    v_gaz = [0 sin(context.theta) cos(context.theta)]; % en m/s
+    v_gaz = context.v_gaz * [0 sin(context.theta) cos(context.theta)]; % en m/s
     f = - context.mu * v_gaz;
 endfunction
 
-context = {};
-context.mu = 1200;
-context.theta = 0.2;
+
 x = F_propulsion_locale(context);
 fprintf(x);
