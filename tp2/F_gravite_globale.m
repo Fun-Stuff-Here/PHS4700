@@ -6,6 +6,3 @@ function f = F_gravite_globale(context)
     option_euclidienne = 2;
     f = (-G * masse_fusee * masse_terre / ( norm(r_fusee, option_euclidienne) ^3 )) * r_fusee;
 endfunction
-
-x= F_gravite_globale({});
-fprintf(x);

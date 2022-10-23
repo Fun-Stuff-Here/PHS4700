@@ -13,5 +13,4 @@ function f = F_propulsion_locale(context)
 endfunction
 
 
-x = F_propulsion_locale(context);
-fprintf(x);
+
