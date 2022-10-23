@@ -1,3 +1,3 @@
 function f = F_resultante_globale(context)
-    f = [0;0;0];
+    f = F_propulsion_globale(context) + F_frottement_globale(context) + F_gravite_globale(context);
 endfunction
