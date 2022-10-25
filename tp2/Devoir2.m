@@ -21,7 +21,7 @@ function [vf t x y z] = Devoir2(theta)
             0; % R_2
             0; % R_3
             0; % R_4
-            320000; % m
+            620000; % m
 ];
 
     [vf t x y z] = SimulationParContrainte(q_0, epsilon);
