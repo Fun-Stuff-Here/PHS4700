@@ -24,7 +24,7 @@ function [vf t x y z] = Devoir2(theta)
             320000; % m
 ];
 
-    [vf t x y z] = SimulationParContrainte(q_0, epsilon);
+    [vf t x y z] = SimulationParContrainte(q_0, epsilon, theta);
 
     n_points = length(t);
     if (n_points > 1000)

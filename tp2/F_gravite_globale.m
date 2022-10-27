@@ -1,8 +1,17 @@
 function f = F_gravite_globale(context)
-    masse_terre = context.masse_terre;
-    masse_fusee = context.masse_fusee;
-    G = 6.673 * 10 ^(-11);  % Nm²/Kg²
-    r_fusee = context.r_fusee;
+% F_gravite_globale - Calcul de la force de gravite globale
+%    La fonction retourne la force de gravite globale
+% context - Structure contenant les variables du contexte
+
+% --------------------------- context linking --------------------------- %
+    masse_terre = context.terre.MASSE; % kg
+    masse_fusee = context.fusee.m; % kg
+    G = context.G;  % Nm²/Kg²
+    r_fusee = context.fusee.pos; % m
+% --------------------------- context linking --------------------------- %
+
+% ---------------------------  computation ------------------------------ %
     option_euclidienne = 2;
     f = (-G * masse_fusee * masse_terre / ( norm(r_fusee, option_euclidienne) ^3 )) * r_fusee;
+% ---------------------------  computation ------------------------------ %
 endfunction

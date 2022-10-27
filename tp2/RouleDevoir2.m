@@ -12,7 +12,7 @@ ylabel('z(m)')
 % Valeur de thêta à modifier
 theta=0.0;
 [Vf t x y z]=Devoir2(theta);
-sz=size(t,2);% si la trajectoire n'apparait pas dans la figure, remplacer par sz=size(t,1)
+sz=size(t,1);% si la trajectoire n'apparait pas dans la figure, remplacer par sz=size(t,1)
 plot(y,z,'r')
 fprintf('Angle thêtan          %10.9f rad \n',theta);
 fprintf('Temps final          %10.6f s \n',t(sz));

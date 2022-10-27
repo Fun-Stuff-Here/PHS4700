@@ -1,8 +1,16 @@
-function p = rho(position_fusee)
-    % position_fusee: la position de la fusée [x y z]
-    rho_o = 1.275; % Kg/m^3
-    H_0 = 7200; % mètres
-    R_t = 6371 * (10 ^ 3); % En mètres
+function p = rho(context)
+% RHO  Compute the density of the atmosphere at a given altitude
+% context structure des variables de l'environnement
+
+% --------------------------- context linking --------------------------- %
+    position_fusee = context.fusee.pos; % m
+    rho_o = context.RHO_0; % kg/m^3
+    H_0 = context.H_0; % m
+    R_t = context.terre.RAYON; % m
+% --------------------------- context linking --------------------------- %
+
+% ---------------------------  computation ------------------------------ %
     norme_position = norm(position_fusee);
     p = rho_o * exp( (R_t - norme_position)/H_0 );
+% ---------------------------  computation ------------------------------ %
 endfunction

@@ -1,4 +1,4 @@
-function [vf t x y z] = SimulationParContrainte(q_0, epsilon)
+function [vf t x y z] = SimulationParContrainte(q_0, epsilon, theta)
 % SimulationParContrainte simule la trajectoire d'un objet
 % avec un contrôle d'erreur et la condition d'arret stopCondition
 %   q0        : conditions initiales [q(t0)]
@@ -10,6 +10,7 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon)
 %   x         : vecteur des positions en x
 %   y         : vecteur des positions en y
 %   z         : vecteur des positions en z
+%  theta      : angle du propulseur
 
 % le nombre de pas de temps et delta t minimum
 n_deltaT = 100;
@@ -28,7 +29,7 @@ while(true)
     erreurMaximalParDeltaT = epsilon./n_deltaT;
 
     while (!StopCondition(q_i))
-        [q_i m Err]= SEDRK4t0ER(q_i, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
+        [q_i m Err]= SEDRK4t0ER(q_i, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g', theta);
         t_i = t_i + DeltaT;
         t = [t; t_i];
         x = [x; 0];

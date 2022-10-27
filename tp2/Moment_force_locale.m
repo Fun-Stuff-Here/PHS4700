@@ -1,14 +1,17 @@
-function alpha = AccelerationAngulaire(context)
-% AccelerationAngulaire
+function t = Moment_force_locale(context)
+% moment force locale de la fusee
 % context : contexte de la simulation
 
+% --------------------------- context linking --------------------------- %
+    r = context.fusee.POS_PROPULSEUR;
+% --------------------------- context linking --------------------------- %
+
 % -------------------------- function linking --------------------------- %
-    I = Inertie(context);
-    t = Moment_force_locale(context);
+    F = F_propulsion_locale(context);
 % -------------------------- function linking --------------------------- %
 
 % ---------------------------  computation ------------------------------ %
-    alpha = inv(I) * t;
+    t = cross(r.',F.').';
 % ---------------------------  computation ------------------------------ %
 
 endfunction
