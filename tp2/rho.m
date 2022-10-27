@@ -10,7 +10,7 @@ function p = rho(context)
 % --------------------------- context linking --------------------------- %
 
 % ---------------------------  computation ------------------------------ %
-    norme_position = norm(position_fusee);
+    norme_position = norm(position_fusee.');
     p = rho_o * exp( (R_t - norme_position)/H_0 );
 % ---------------------------  computation ------------------------------ %
 endfunction

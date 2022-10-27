@@ -10,7 +10,7 @@ function f = F_propulsion_locale(context)
 % --------------------------- context linking --------------------------- %
 
 % ---------------------------  computation ------------------------------ %
-    v_gaz = v_gaz_norme * [0 sin(theta) cos(theta)]; % en m/s
-    f = - mu * v_gaz;
+    v_gaz = v_gaz_norme * [0; sin(theta); cos(theta)]; % en m/s
+    f = mu * v_gaz;
 % ---------------------------  computation ------------------------------ %
 endfunction

@@ -4,7 +4,7 @@ function f = F_propulsion_globale(context)
 %   f : vecteur de la force de propulsion globale
 
 % --------------------------- context linking --------------------------- %
-    q_rotation = context.R;
+    q_rotation = context.fusee.R;
 % --------------------------- context linking --------------------------- %
 
 % -------------------------- function linking --------------------------- %
@@ -12,7 +12,7 @@ function f = F_propulsion_globale(context)
 % -------------------------- function linking --------------------------- %
 
 % ---------------------------  computation ------------------------------ %
-    q_f_locale = [0 f_locale(1) f_locale(2) f_locale(3)];
-    f = QRotation(q_rotation, q_f_locale)(2:4);
+    q_f_locale = [0; f_locale(1); f_locale(2); f_locale(3)];
+    f = (QRotation(q_rotation.', q_f_locale.')(2:4)).';
 % ---------------------------  computation ------------------------------ %
 endfunction

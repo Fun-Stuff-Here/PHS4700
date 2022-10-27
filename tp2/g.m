@@ -32,7 +32,7 @@ function [delta_q] =  g(q, t, theta)
     context.fusee.m = q(10); % kg
 
     % ajuster le DEBIT_MASSIQUE_GAZ s'il n'y a plus de carburant
-    if (context.m <= fusee.MASSE_INITIALE - fusee.MASSE_CARBURANT_INITIAL)
+    if (context.fusee.m <= fusee.MASSE_INITIALE - fusee.MASSE_CARBURANT_INITIAL)
         context.fusee.DEBIT_MASSIQUE_GAZ = 0;
     end
 
@@ -50,7 +50,7 @@ function [delta_q] =  g(q, t, theta)
                 delta_R(2) % R_2
                 delta_R(3) % R_3
                 delta_R(4) % R_4
-                context.fusee.DEBIT_MASSIQUE_GAZ % m
+                -context.fusee.DEBIT_MASSIQUE_GAZ % m
     ];
 
 endfunction

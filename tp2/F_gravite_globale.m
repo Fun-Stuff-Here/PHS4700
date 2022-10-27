@@ -11,7 +11,6 @@ function f = F_gravite_globale(context)
 % --------------------------- context linking --------------------------- %
 
 % ---------------------------  computation ------------------------------ %
-    option_euclidienne = 2;
-    f = (-G * masse_fusee * masse_terre / ( norm(r_fusee, option_euclidienne) ^3 )) * r_fusee;
+    f = (-G * masse_fusee * masse_terre / ( norm(r_fusee.') ^ 3 )) * r_fusee;
 % ---------------------------  computation ------------------------------ %
 endfunction
