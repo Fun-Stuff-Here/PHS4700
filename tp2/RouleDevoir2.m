@@ -18,7 +18,7 @@ axis equal;
 xlabel('y(m)')
 ylabel('z(m)')
 % Valeur de thêta à modifier
-theta=0.6;
+theta=0.4602;
 [Vf t x y z]=Devoir2(theta);
 sz=size(t,1);% si la trajectoire n'apparait pas dans la figure, remplacer par sz=size(t,1)
 plot(y,z,'r');
