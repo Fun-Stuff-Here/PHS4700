@@ -14,7 +14,7 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon, theta)
 
 % le nombre de pas de temps et delta t minimum
 n_deltaT = 100;
-DeltaT = 20;
+DeltaT = 10;
 
 while(true)
     % -------------------------------Simulation ---------------------------------------------

@@ -36,23 +36,23 @@ function [vf t x y z] = Devoir2(theta)
             end
             step_factor = step_factor / 2;
         end
-        for i=1:(n_points-1):step_factor
-            new_vf = [new_vf; vf(i)];
-            new_t = [new_t; t(i)];
-            new_x = [new_x; x(i)];
-            new_y = [new_y; y(i)];
-            new_z = [new_z; z(i)];
-        end
-    new_vf = [new_vf; vf(end)];
-    new_t = [new_t; t(end)];
-    new_x = [new_x; x(end)];
-    new_y = [new_y; y(end)];
-    new_z = [new_z; z(end)];
-    vf = new_vf;
-    t = new_t;
-    x = new_x;
-    y = new_y;
-    z = new_z;
+    %    for i=1:(n_points-1):step_factor
+    %        new_vf = [new_vf; vf(i)];
+    %        new_t = [new_t; t(i)];
+    %        new_x = [new_x; x(i)];
+    %        new_y = [new_y; y(i)];
+    %        new_z = [new_z; z(i)];
+    %    end
+    %new_vf = [new_vf; vf(end)];
+    %new_t = [new_t; t(end)];
+    %new_x = [new_x; x(end)];
+    %new_y = [new_y; y(end)];
+    %new_z = [new_z; z(end)];
+    %vf = new_vf;
+    %t = new_t;
+    %x = new_x;
+    %y = new_y;
+    %z = new_z;
     end
 
 endfunction
