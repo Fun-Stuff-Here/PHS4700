@@ -23,7 +23,7 @@ theta=0.4602;
 sz=size(t,1);% si la trajectoire n'apparait pas dans la figure, remplacer par sz=size(t,1)
 plot(y,z,'r');
 hold off;
-fprintf('Angle thêtan          %10.9f rad \n',theta);
+fprintf('Angle thêta          %10.9f rad \n',theta);
 fprintf('Temps final          %10.6f s \n',t(sz));
 fprintf('Vitesse finale          %10.6f m/s \n',Vf);
 fprintf('Position finale        ( %10.0f   , %10.0f   ,%10.0f )m \n',x(sz),y(sz),z(sz));
