@@ -122,4 +122,48 @@ Acceleration angulaire:
 \end{bmatrix}
 \end{equation}
 
+\begin{equation}
+    \vec{v} = \begin{bmatrix}
+        v_x \\
+        v_y \\
+        v_z \\
+    \end{bmatrix}
+    \implies
+    \vec{\vec{v}} = \begin{bmatrix}
+        0 \\
+        v_x\\
+        v_y \\
+        v_z \\
+    \end{bmatrix}
+    ,
+    \vec{\vec{R}} = \begin{bmatrix}
+        \cos(\frac{\theta}{2}) \\
+        \sin(\frac{\theta}{2}) \hat{u}_x \\
+        \sin(\frac{\theta}{2}) \hat{u}_y\\
+        \sin(\frac{\theta}{2}) \hat{u}_z\\
+    \end{bmatrix}
+    ,
+    \vec{\vec{R}}^* = \begin{bmatrix}
+        \cos(\frac{\theta}{2}) \\
+        -\sin(\frac{\theta}{2}) \hat{u}_x\\
+        -\sin(\frac{\theta}{2}) \hat{u}_y\\
+        -\sin(\frac{\theta}{2}) \hat{u}_z\\
+    \end{bmatrix}
+\end{equation}
+
+\begin{equation}
+    \vec{\vec{v}}' = \vec{\vec{R}}\vec{\vec{v}}\vec{\vec{R}}^* = \begin{bmatrix}
+        v'_1\\
+        v'_2\\
+        v'_3 \\
+        v'_4 \\
+    \end{bmatrix}
+    \implies
+    \vec{v}' = \begin{bmatrix}
+        v'_2\\
+        v'_3 \\
+        v'_4 \\
+    \end{bmatrix}
+\end{equation}
+
 \end{document}
