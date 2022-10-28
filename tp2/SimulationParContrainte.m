@@ -3,7 +3,7 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon, theta)
 % avec un contrôle d'erreur et la condition d'arret stopCondition
 %   q0        : conditions initiales [q(t0)]
 %   epsilon   : vecteur précision pour chaque variable
-%   g         : membre de droite de ED. 
+%   g         : membre de droite de ED.
 %   stopCondition : condition d'arret de la simulation
 %   vf     : valeur finale de la vitese
 %   t         : vecteur des temps
@@ -14,7 +14,7 @@ function [vf t x y z] = SimulationParContrainte(q_0, epsilon, theta)
 
 % le nombre de pas de temps et delta t minimum
 n_deltaT = 100;
-DeltaT = 40;
+DeltaT = 20;
 
 while(true)
     % -------------------------------Simulation ---------------------------------------------
