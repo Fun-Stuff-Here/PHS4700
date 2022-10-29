@@ -2,8 +2,8 @@ function [vf t x y z] = Devoir2(theta)
 
     epsilon = [ inf; % erreur sur v_y
                 inf; % erreur sur v_z
-                10;  % erreur sur y
-                10;  % erreur sur z
+                5*(2^0.5);  % erreur sur y
+                5*(2^0.5);  % erreur sur z
                 inf; % erreur sur w_x
                 inf; % erreur sur R_1
                 inf; % erreur sur R_2
