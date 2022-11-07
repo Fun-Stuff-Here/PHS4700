@@ -36,58 +36,52 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
                 0     dice.I_yy    0      ;
                 0         0     dice.I_zz];
     dice.I_inv = inv(dice.I);
-    dice.vertex = [%    1          2          3          4         5          6          7          8      %
+    dice.sommets = [%    1          2          3          4         5          6          7          8      %
                      dice.a/2  -dice.a/2  -dice.a/2   dice.a/2  dice.a/2  -dice.a/2  -dice.a/2   dice.a/2  ;
                      dice.b/2   dice.b/2  -dice.b/2  -dice.b/2  dice.b/2   dice.b/2  -dice.b/2  -dice.b/2  ;
                     -dice.c/2   dice.c/2  -dice.c/2  -dice.c/2  dice.c/2   dice.c/2   dice.c/2   dice.c/2  ];
-    dice.faces = {};
-    dice.faces.face_1 = [dice.vertex(:,5) dice.vertex(:,6) dice.vertex(:,7) dice.vertex(:,8)]; % vertex de la face 1
-    dice.faces.face_2 = [dice.vertex(:,3) dice.vertex(:,4) dice.vertex(:,7) dice.vertex(:,8)]; % vertex de la face 2
-    dice.faces.face_3 = [dice.vertex(:,2) dice.vertex(:,3) dice.vertex(:,6) dice.vertex(:,7)]; % vertex de la face 3
-    dice.faces.face_4 = [dice.vertex(:,1) dice.vertex(:,4) dice.vertex(:,5) dice.vertex(:,8)]; % vertex de la face 4
-    dice.faces.face_5 = [dice.vertex(:,1) dice.vertex(:,2) dice.vertex(:,5) dice.vertex(:,6)]; % vertex de la face 5
-    dice.faces.face_6 = [dice.vertex(:,5) dice.vertex(:,6) dice.vertex(:,7) dice.vertex(:,8)]; % vertex de la face 6
 
     % ------------------ Vecteur d'etat q -----------------------------
     R = MatrixToQuat(problem.params.MatR0);
     q = [
-        Pos0(1) % x
-        Pos0(2) % y
-        Pos0(3) % z
-        V0(1) % Vx
-        V0(2) % Vy
-        V0(3) % Vz
-        W0(1) % Wx
-        W0(2) % Wy
-        W0(3) % Wz
-        R(1) % quaternion rotation w
-        R(2) % quaternion rotation x
-        R(3) % quaternion rotation y
-        R(4) % quaternion rotation z
+        Pos0(1) % x   1
+        Pos0(2) % y   2
+        Pos0(3) % z   3
+        V0(1) % Vx    4
+        V0(2) % Vy    5
+        V0(3) % Vz    6
+        W0(1) % Wx    7
+        W0(2) % Wy    8
+        W0(3) % Wz    9
+        R(1) % quaternion rotation w   10
+        R(2) % quaternion rotation x   11
+        R(3) % quaternion rotation y   12
+        R(4) % quaternion rotation z   13
         ];
     dice.q = q;
     % ------------------ Vecteur d'etat q -----------------------------
     problem.dice = dice;
     % ------------------ Fin Paramètres du cube -----------------------
+    % ------------------ Paramètres du sol ----------------------------
+    sol = {};
+    sol.m = inf; % kg
+    sol.z = 0; % m
+    sol.v = [0; 0; 0]; % m/s
+    sol.I = [ inf  0   0 ;
+               0  inf  0 ;
+               0   0  inf];
+    sol.I_inv = [ 0  0  0 ;
+                  0  0  0 ;
+                  0  0  0];
+    sol.n_hat = [0; 0; 1]; % vecteur normal au sol (pointant vers le dice)
+    problem.sol = sol;
+    % ------------------ Fin Paramètres du sol ------------------------
     % ------------------ Fin Initialisation des variables -------------
 
 
+    [t x y z all_sommets] = Simulation(problem);
 
-
-    face = 1; % TODO Donne la face du résultat
-    t = [1 2 3 4]; % vecteur contenant le temps correspondant à chacune des positions enregistrées pour le tracé la trajectoire du dé. La dernière valeur doit être l’instant d’arrêt de la simulation 
-    x = [1 2 3 4]; 
-    y = [1 2 3 4];
-    z = [1 2 3 4];
-    sommets = [
-        1 2 3;
-        4 5 6;
-        7 8 9;
-        1 2 3;
-        4 5 6;
-        7 8 9;
-        1 2 3;
-        4 5 6;
-        ]; % Position finale de chaun des 8 sommets
+    face = CalculFaceObtenue(problem);
+    sommets = all_sommets(end); % Position finale de chaun des 8 sommets
 
 endfunction
