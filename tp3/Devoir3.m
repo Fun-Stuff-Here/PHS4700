@@ -39,7 +39,7 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     dice.sommets = [%    1          2          3          4         5          6          7          8      %
                      dice.a/2  -dice.a/2  -dice.a/2   dice.a/2  dice.a/2  -dice.a/2  -dice.a/2   dice.a/2  ;
                      dice.b/2   dice.b/2  -dice.b/2  -dice.b/2  dice.b/2   dice.b/2  -dice.b/2  -dice.b/2  ;
-                    -dice.c/2   dice.c/2  -dice.c/2  -dice.c/2  dice.c/2   dice.c/2   dice.c/2   dice.c/2  ];
+                    -dice.c/2  -dice.c/2  -dice.c/2  -dice.c/2  dice.c/2   dice.c/2   dice.c/2   dice.c/2  ];
 
     % ------------------ Vecteur d'etat q -----------------------------
     R = MatrixToQuat(problem.params.MatR0);
@@ -76,6 +76,13 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     sol.n_hat = [0; 0; 1]; % vecteur normal au sol (pointant vers le dice)
     problem.sol = sol;
     % ------------------ Fin Paramètres du sol ------------------------
+
+    % ------------------ HyperParamètres de la simulation -------------
+    hyperparams = {};
+    hyperparams.facteur_erreur_collision = 10; % factor by which the erreur is divided when a collision occurs
+    hyperparams.facteur_delta_t = 100; % factor by which the time step is divided when a collision occurs
+    problem.hyperparams = hyperparams;
+    % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------
 
 
