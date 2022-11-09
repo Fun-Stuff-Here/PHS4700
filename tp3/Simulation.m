@@ -45,7 +45,100 @@ while(true)
 
     erreurMaximalParDeltaT = epsilon./n_deltaT;
 
+    i = 1;
+%------------------------------------------------------------------------------------------------------------------------------
+    figure;
+    sommets_plot = sommets{1};
+    x_plot = [sommets_plot(1,:)];
+    y_plot = [sommets_plot(2,:)];
+    z_plot = [sommets_plot(3,:)];
+    % ------------------  Affichage du cube ---------------------------
+    plot3(x_plot([1,2]), y_plot([1,2]), z_plot([1,2]), 'k');
+    hold on;
+    plot3(x_plot([1,4]), y_plot([1,4]), z_plot([1,4]), 'k');
+    hold on;
+    plot3(x_plot([3,4]), y_plot([3,4]), z_plot([3,4]), 'k');
+    hold on;
+    plot3(x_plot([2,3]), y_plot([2,3]), z_plot([2,3]), 'k');
+    hold on;
+    plot3(x_plot([1,5]), y_plot([1,5]), z_plot([1,5]), 'k');
+    hold on;
+    plot3(x_plot([2,6]), y_plot([2,6]), z_plot([2,6]), 'k');
+    hold on;
+    plot3(x_plot([3,7]), y_plot([3,7]), z_plot([3,7]), 'k');
+    hold on;
+    plot3(x_plot([4,8]), y_plot([4,8]), z_plot([4,8]), 'k');
+    hold on;
+    plot3(x_plot([5,6]), y_plot([5,6]), z_plot([5,6]), 'k');
+    hold on;
+    plot3(x_plot([6,7]), y_plot([6,7]), z_plot([6,7]), 'k');
+    hold on;
+    plot3(x_plot([7,8]), y_plot([7,8]), z_plot([7,8]), 'k');
+    hold on;
+    plot3(x_plot([5,8]), y_plot([5,8]), z_plot([5,8]), 'k');
+    hold on;
+    % ------------------  Fin Affichage du cube -----------------------
+    % ------------------  Affichage du sol ----------------------------
+    scale = 1.5;
+    plot3([scale, scale, -scale, -scale, scale], [scale, -scale, -scale, scale, scale], [0, 0, 0, 0, 0], 'k');
+    zlim([0, max(z)+0.1]);
+    hold on;
+    % ------------------  Fin Affichage du sol ------------------------
+    axis("equal");
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
+    title(['t = ' num2str(t(1))]);
+    hold on;
+    pause(0.3);
+%------------------------------------------------------------------------------------------------------------------------------
+
     while (!StopCondition(problem))
+
+%------------------------------------------------------------------------------------------------------------------------------
+if (mod(i,7) == 0)
+    sommets_plot = sommets{i};
+    x_plot = [sommets_plot(1,:)];
+    y_plot = [sommets_plot(2,:)];
+    z_plot = [sommets_plot(3,:)];
+
+    % ------------------  Affichage du cube ---------------------------
+    plot3(x_plot([1,2]), y_plot([1,2]), z_plot([1,2]), 'k');
+    hold on;
+    plot3(x_plot([1,4]), y_plot([1,4]), z_plot([1,4]), 'k');
+    hold on;
+    plot3(x_plot([3,4]), y_plot([3,4]), z_plot([3,4]), 'k');
+    hold on;
+    plot3(x_plot([2,3]), y_plot([2,3]), z_plot([2,3]), 'k');
+    hold on;
+    plot3(x_plot([1,5]), y_plot([1,5]), z_plot([1,5]), 'k');
+    hold on;
+    plot3(x_plot([2,6]), y_plot([2,6]), z_plot([2,6]), 'k');
+    hold on;
+    plot3(x_plot([3,7]), y_plot([3,7]), z_plot([3,7]), 'k');
+    hold on;
+    plot3(x_plot([4,8]), y_plot([4,8]), z_plot([4,8]), 'k');
+    hold on;
+    plot3(x_plot([5,6]), y_plot([5,6]), z_plot([5,6]), 'k');
+    hold on;
+    plot3(x_plot([6,7]), y_plot([6,7]), z_plot([6,7]), 'k');
+    hold on;
+    plot3(x_plot([7,8]), y_plot([7,8]), z_plot([7,8]), 'k');
+    hold on;
+    plot3(x_plot([5,8]), y_plot([5,8]), z_plot([5,8]), 'k');
+    axis("equal");
+    xlabel('x')
+    ylabel('y')
+    zlabel('z')
+    hold on;
+    title(['t = ' num2str(t(i))]);
+    % ------------------  Fin Affichage du cube -----------------------
+
+    pause(0.1); %// update plot
+endif
+i = i+1;
+%------------------------------------------------------------------------------------------------------------------------------
+
         old_q_i = q_i;
         [q_i m Err]= SEDRK4t0ER(problem, q_i, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
         problem.dice.q = q_i;

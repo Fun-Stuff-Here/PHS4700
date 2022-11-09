@@ -5,24 +5,34 @@ function face = CalculFaceObtenue(problem)
 % return -1 si il n'y a pas de face obtenue
 
     sommets = CalculSommetsGlobal(problem);
-    coins = []
+    coins = [];
     for i = 1:4
-        indexes = []
+        indexes = [];
         for j = 1:8
             if !(any(coins == j))
                 indexes = [indexes j];
             end
         end
-        [x, ix] = max(sommets(3, indexes));
-        coins = [coins ix];
+        max_found = -inf;
+        max_index = -1;
+        for k = 1:8
+            if(!any(indexes == k))
+                continue
+            end
+            if(sommets(3, k) > max_found)
+                max_found = sommets(3, k);
+                max_index = k;
+            end
+        end
+        coins = [coins max_index];
     end
     
-    face_1 = [1, 2, 3, 4];
-    face_2 = [3, 4, 7, 8];
-    face_3 = [2, 3, 6, 7];
-    face_4 = [1, 4, 5, 8];
-    face_5 = [1, 2, 5, 6];
-    face_6 = [5, 6, 7, 8];
+    face_1 = [1 2 3 4];
+    face_2 = [3 4 7 8];
+    face_3 = [2 3 6 7];
+    face_4 = [1 4 5 8];
+    face_5 = [1 2 5 6];
+    face_6 = [5 6 7 8];
 
     if (all(ismember(coins, face_1)))
         face = 1;

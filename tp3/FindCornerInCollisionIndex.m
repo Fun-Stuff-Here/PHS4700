@@ -1,7 +1,7 @@
-function index = FindCornerInCollisionIndex(problem)
+function indexes = FindCornerInCollisionIndex(problem)
 % FindCornerInCollision - Find a corner in collision
 % problem - the problem structure
 
     sommets = CalculSommetsGlobal(problem);
-    [sommet_min, index] = min(sommets(3,:));
+    indexes = sommets(3,:)<problem.sol.z;
 endfunction
