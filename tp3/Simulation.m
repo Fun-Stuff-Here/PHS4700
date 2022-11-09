@@ -29,8 +29,8 @@ epsilon = [
 ];
 
 % Premiere essai de simulation avec une prediction de 100 timestep
-n_deltaT = 100;
-DeltaT = 1e-2;
+n_deltaT = problem.hyperparams.n_delta_t_initial; % number of time steps
+DeltaT = problem.hyperparams.delta_t_initial; % time step
 
 while(true)
     % -------------------------------Simulation ---------------------------------------------
@@ -96,7 +96,7 @@ while(true)
     while (!StopCondition(problem))
 
 %------------------------------------------------------------------------------------------------------------------------------
-if (mod(i,7) == 0)
+if (mod(i,problem.hyperparams.n_delta_t_between_frames) == 0)
     sommets_plot = sommets{i};
     x_plot = [sommets_plot(1,:)];
     y_plot = [sommets_plot(2,:)];

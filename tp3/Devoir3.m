@@ -81,6 +81,9 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     hyperparams = {};
     hyperparams.facteur_erreur_collision = 1; % factor by which the erreur is divided when a collision occurs
     hyperparams.facteur_delta_t = 100; % factor by which the time step is divided when a collision occurs
+    hyperparams.delta_t_initial = 1e-2; % s
+    hyperparams.n_delta_t_initial = 100; % nombre de delta_t_initial pour la simulation
+    hyperparams.n_delta_t_between_frames = 5; % nombre de timestep entre chaque frame
     problem.hyperparams = hyperparams;
     % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------
@@ -91,92 +94,4 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     face = CalculFaceObtenue(problem);
     sommets = all_sommets(end); % Position finale de chaun des 8 sommets
 
-
-    % ------------------ Affichage des résultats ----------------------
-    % // first plot out of loop (to get plot handle)
-    figure;
-    sommets_plot = all_sommets{1};
-    x_plot = [sommets_plot(1,:)];
-    y_plot = [sommets_plot(2,:)];
-    z_plot = [sommets_plot(3,:)];
-    % ------------------  Affichage du cube ---------------------------
-    plot3(x_plot([1,2]), y_plot([1,2]), z_plot([1,2]), 'k');
-    hold on;
-    plot3(x_plot([1,4]), y_plot([1,4]), z_plot([1,4]), 'k');
-    hold on;
-    plot3(x_plot([3,4]), y_plot([3,4]), z_plot([3,4]), 'k');
-    hold on;
-    plot3(x_plot([2,3]), y_plot([2,3]), z_plot([2,3]), 'k');
-    hold on;
-    plot3(x_plot([1,5]), y_plot([1,5]), z_plot([1,5]), 'k');
-    hold on;
-    plot3(x_plot([2,6]), y_plot([2,6]), z_plot([2,6]), 'k');
-    hold on;
-    plot3(x_plot([3,7]), y_plot([3,7]), z_plot([3,7]), 'k');
-    hold on;
-    plot3(x_plot([4,8]), y_plot([4,8]), z_plot([4,8]), 'k');
-    hold on;
-    plot3(x_plot([5,6]), y_plot([5,6]), z_plot([5,6]), 'k');
-    hold on;
-    plot3(x_plot([6,7]), y_plot([6,7]), z_plot([6,7]), 'k');
-    hold on;
-    plot3(x_plot([7,8]), y_plot([7,8]), z_plot([7,8]), 'k');
-    hold on;
-    plot3(x_plot([5,8]), y_plot([5,8]), z_plot([5,8]), 'k');
-    hold on;
-    % ------------------  Fin Affichage du cube -----------------------
-    % ------------------  Affichage du sol ----------------------------
-    scale = max([max(x) max(y)])+0.1;
-    plot3([scale, scale, -scale, -scale, scale], [scale, -scale, -scale, scale, scale], [0, 0, 0, 0, 0], 'k');
-    zlim([0, max(z)+0.1]);
-    hold on;
-    % ------------------  Fin Affichage du sol ------------------------
-
-    axis("equal");
-    xlabel('x')
-    ylabel('y')
-    zlabel('z')
-    title(['t = ' num2str(t(1))]);
-    hold on;
-    pause(1);
-
-    for i = 1:7:size(t, 2)
-
-        sommets_plot = all_sommets{i};
-        x_plot = [sommets_plot(1,:)];
-        y_plot = [sommets_plot(2,:)];
-        z_plot = [sommets_plot(3,:)];
-
-        % ------------------  Affichage du cube ---------------------------
-        plot3(x_plot([1,2]), y_plot([1,2]), z_plot([1,2]), 'k');
-        hold on;
-        plot3(x_plot([1,4]), y_plot([1,4]), z_plot([1,4]), 'k');
-        hold on;
-        plot3(x_plot([3,4]), y_plot([3,4]), z_plot([3,4]), 'k');
-        hold on;
-        plot3(x_plot([2,3]), y_plot([2,3]), z_plot([2,3]), 'k');
-        hold on;
-        plot3(x_plot([1,5]), y_plot([1,5]), z_plot([1,5]), 'k');
-        hold on;
-        plot3(x_plot([2,6]), y_plot([2,6]), z_plot([2,6]), 'k');
-        hold on;
-        plot3(x_plot([3,7]), y_plot([3,7]), z_plot([3,7]), 'k');
-        hold on;
-        plot3(x_plot([4,8]), y_plot([4,8]), z_plot([4,8]), 'k');
-        hold on;
-        plot3(x_plot([5,6]), y_plot([5,6]), z_plot([5,6]), 'k');
-        hold on;
-        plot3(x_plot([6,7]), y_plot([6,7]), z_plot([6,7]), 'k');
-        hold on;
-        plot3(x_plot([7,8]), y_plot([7,8]), z_plot([7,8]), 'k');
-        hold on;
-        plot3(x_plot([5,8]), y_plot([5,8]), z_plot([5,8]), 'k');
-        axis("equal");hold on;
-        title(['t = ' num2str(t(i))]);
-        % ------------------  Fin Affichage du cube -----------------------
-
-        pause(0.5); %// update plot
-    end
-    pause(30);
-    % ------------------ Fin Affichage des résultats ------------------
 endfunction

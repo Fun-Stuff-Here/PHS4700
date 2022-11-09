@@ -46,15 +46,14 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
 
     if (mu_s * (1+epsilon)*abs(v_r) < abs(dot(t_hat.', v_r_vec.')))
         j_t = alpha_t * mu_c * (1+epsilon)*v_r;
-        G_a = dot(n_hat.', cross(I_inv_a * cross(r_a_p.', n_hat.'), r_a_p.'));
     else
         j_t = -alpha_t * abs(dot(t_hat.', v_r_vec.'));
-        G_a = 0;
     end
     % -------- Fin Calcul de l'inpulsion j_t ----------------------------
 
     % -------- Calcul de l'inpulsion j ----------------------------------
     G_b = dot(n_hat.', cross(I_inv_b * cross(r_b_p.', n_hat.'), r_b_p.'));
+    G_a = dot(n_hat.', cross(I_inv_a * cross(r_a_p.', n_hat.'), r_a_p.'));
     alpha = 1 / (1/m_a + 1/m_b + G_a + G_b);
     j = -alpha*(1+epsilon)*v_r;
     % -------- Fin Calcul de l'inpulsion j ------------------------------
