@@ -31,6 +31,10 @@ epsilon = [
 % Premiere essai de simulation avec une prediction de 100 timestep
 n_deltaT = problem.hyperparams.n_delta_t_initial; % number of time steps
 DeltaT = problem.hyperparams.delta_t_initial; % time step
+max_travel_distance_near_collision = problem.hyperparams.max_travel_distance_near_collision; % maximum distance traveled by timestep when it is near a collision
+l = problem.dice.l;
+R_min = problem.dice.R_min;
+last_time = 0;
 
 while(true)
     % -------------------------------Simulation ---------------------------------------------
@@ -43,11 +47,10 @@ while(true)
     z = [q_i(3)];
     sommets = {CalculSommetsGlobal(problem)};
 
-    erreurMaximalParDeltaT = epsilon./n_deltaT;
+    erreurMaximalParDeltaT = epsilon/n_deltaT;
 
-    i = 1;
 %------------------------------------------------------------------------------------------------------------------------------
-    figure;
+    figure(2);
     sommets_plot = sommets{1};
     x_plot = [sommets_plot(1,:)];
     y_plot = [sommets_plot(2,:)];
@@ -90,14 +93,15 @@ while(true)
     zlabel('z')
     title(['t = ' num2str(t(1))]);
     hold on;
-    pause(0.3);
+    pause(0.01);
 %------------------------------------------------------------------------------------------------------------------------------
 
     while (!StopCondition(problem))
 
 %------------------------------------------------------------------------------------------------------------------------------
-if (mod(i,problem.hyperparams.n_delta_t_between_frames) == 0)
-    sommets_plot = sommets{i};
+if (abs(last_time - t_i) >= problem.hyperparams.delta_t_between_frames)
+    last_time = t_i;
+    sommets_plot = sommets{end};
     x_plot = [sommets_plot(1,:)];
     y_plot = [sommets_plot(2,:)];
     z_plot = [sommets_plot(3,:)];
@@ -131,22 +135,31 @@ if (mod(i,problem.hyperparams.n_delta_t_between_frames) == 0)
     ylabel('y')
     zlabel('z')
     hold on;
-    title(['t = ' num2str(t(i))]);
+    title(['t = ' num2str(t(end))]);
+    pause(0.1);
     % ------------------  Fin Affichage du cube -----------------------
 
-    pause(0.1); %// update plot
 endif
-i = i+1;
+
 %------------------------------------------------------------------------------------------------------------------------------
 
         old_q_i = q_i;
+
+        %update delta_t to travel a distance of epsilon by timestep
+        if (q_i(3) < 2*R_min)
+            DeltaT = max_travel_distance_near_collision/(max(abs(q_i(4:6)) + R_min * max(abs(q_i(7:9)))));
+        else
+            DeltaT = problem.hyperparams.delta_t_initial;
+        endif
+
         [q_i m Err]= SEDRK4t0ER(problem, q_i, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
         problem.dice.q = q_i;
         % Detection collision and backtracking
         if (DetectCollision(problem))
             q_i = old_q_i;
+            old_t_i = t_i;
             problem.dice.q = old_q_i;
-            collision_error = erreurMaximalParDeltaT./facteur_erreur_collision;
+            collision_error = erreurMaximalParDeltaT/facteur_erreur_collision;
             collision_deltaT = DeltaT/facteur_delta_t;
             while (!DetectCollision(problem)) % get has close as possible to the collision
                 old_q_i = q_i;
@@ -157,10 +170,10 @@ i = i+1;
             sommet_i = FindCornerInCollisionIndex(problem);
             % Backtracking
             problem.dice.q = old_q_i;
-            t_i = t_i - collision_deltaT;
             % the collision is now happening
             q_i = CollisionsMethdodeConditionInitial(problem, sommet_i);
             problem.dice.q = q_i;
+            t_i = old_t_i;
         endif
 
         % update variables

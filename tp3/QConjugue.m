@@ -1,5 +1,10 @@
-function c=QConjugue(a)
+function c = QConjugue(a)
 %
 % Conjuguer un quaternion
 % 
-c=horzcat([a(1)], -a(2:4));
+c = [ a(1);
+     -a(2);
+     -a(3);
+     -a(4)];
+
+endfunction

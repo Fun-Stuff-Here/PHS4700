@@ -29,7 +29,7 @@ function [isConditionMet, E] = StopCondition(problem, q)
 
     % ------------------ Calcul ernergie ---------------------------------
 
-    E =1/2*m*dot(v,v) + 1/2 * I(1,1) * dot(omega, omega) + m * g * z;
+    E = 1/2*m*dot(v,v) + 1/2 * I(1,1) * dot(omega, omega) + m * g * z;
     % ------------------ Fin Calcul ernergie -----------------------------
 
     isConditionMet = (E < sqrt(2) * m * g * l);

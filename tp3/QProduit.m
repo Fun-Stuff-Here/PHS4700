@@ -1,9 +1,11 @@
-function c=QProduit(a,b)
-%
+function c = QProduit(q1, q2)
 % Produit de 2 quaternions
-% 
-v1=a(2:4);
-v2=b(2:4);
-vp=cross(v1,v2);
-vecpc=a(1)*v2+b(1)*v1+vp;
-c=horzcat((a(1)*b(1)-(v1*v2')),vecpc); 
+% q1,q2 : quaternions
+% c : quaternion
+
+c = [q1(1)*q2(1) - q1(2)*q2(2) - q1(3)*q2(3) - q1(4)*q2(4);
+     q1(1)*q2(2) + q1(2)*q2(1) + q1(3)*q2(4) - q1(4)*q2(3);
+     q1(1)*q2(3) + q1(3)*q2(1) + q1(4)*q2(2) - q1(2)*q2(4);
+     q1(1)*q2(4) + q1(4)*q2(1) + q1(2)*q2(3) - q1(3)*q2(2)];
+
+endfunction

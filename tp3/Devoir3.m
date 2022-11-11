@@ -29,6 +29,7 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     dice.a = 4e-2; % m
     dice.b = 4e-2; % m
     dice.c = 4e-2; % m
+    dice.R_min = sqrt((dice.l/2)^2+(dice.l/2)^2); % m
     dice.I_xx = 1/12*dice.m*(dice.b^2+dice.c^2); % kg.m^2
     dice.I_yy = 1/12*dice.m*(dice.a^2+dice.c^2); % kg.m^2
     dice.I_zz = 1/12*dice.m*(dice.a^2+dice.b^2); % kg.m^2
@@ -79,11 +80,12 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
 
     % ------------------ HyperParamètres de la simulation -------------
     hyperparams = {};
-    hyperparams.facteur_erreur_collision = 1; % factor by which the erreur is divided when a collision occurs
-    hyperparams.facteur_delta_t = 100; % factor by which the time step is divided when a collision occurs
-    hyperparams.delta_t_initial = 1e-2; % s
+    hyperparams.facteur_erreur_collision = 10; % factor by which the erreur is divided when a collision occurs
+    hyperparams.facteur_delta_t = 10; % factor by which the time step is divided when a collision occurs
+    hyperparams.delta_t_initial = 1e-3; % s
     hyperparams.n_delta_t_initial = 100; % nombre de delta_t_initial pour la simulation
-    hyperparams.n_delta_t_between_frames = 5; % nombre de timestep entre chaque frame
+    hyperparams.delta_t_between_frames = 5e-2; % temps entre chaque frame
+    hyperparams.max_travel_distance_near_collision = 2.5e-4; % m
     problem.hyperparams = hyperparams;
     % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------

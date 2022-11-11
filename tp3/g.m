@@ -21,9 +21,9 @@ function [delta_q] =  g(problem, q, t)
 %  ------------  Fin unpack vecteur d'etat --------------
 
     quat = [quat_w; quat_x; quat_y; quat_z];
-    quat = quat/norm(quat.'); % normalisation du quaternion pour eviter les erreurs numeriques
+    quat = quat/norm(quat); % normalisation du quaternion pour eviter les erreurs numeriques
     omega_quat = [0; w_x; w_y; w_z];
-    delta_quat = 1/2 * QProduit(quat.', omega_quat.');
+    delta_quat = 1/2 * QProduit(quat, omega_quat);
 
     delta_q = [ 
         v_x; % dx/dt
