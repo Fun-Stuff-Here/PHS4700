@@ -17,6 +17,7 @@ function forces = Forces(problem)
     R_min = problem.dice.R_min;
     n_hat = problem.sol.n_hat;
     close_enough = problem.hyperparams.close_enough;
+    debugMode = problem.hyperparams.debugMode;
 % ------------------------------ Fin Problem Definition ------------------------------
     forces = {};
     forces.F_g = [0; 0; 0];
@@ -40,7 +41,10 @@ function forces = Forces(problem)
             sommet = sommets(:,1);
         endif
         v_r = dot(v_dice + cross(omega, sommet), n_hat);
-        printf(" v_r = %f ,sommets = 1:%f,2:%f,3:%f,4:%f,5:%f,6:%f,7:%f,8:%f \n", v_r, sommets_global(3,1), sommets_global(3,2), sommets_global(3,3), sommets_global(3,4), sommets_global(3,5), sommets_global(3,6), sommets_global(3,7), sommets_global(3,8));
+        if (debugMode)
+            printf(" v_r = %f ,sommets = 1:%f,2:%f,3:%f,4:%f,5:%f,6:%f,7:%f,8:%f \n", v_r, sommets_global(3,1), sommets_global(3,2), sommets_global(3,3), sommets_global(3,4), sommets_global(3,5), sommets_global(3,6), sommets_global(3,7), sommets_global(3,8));
+        endif
+
         if (abs(v_r) < close_enough)
 % ----------------------------- Normale ----------------------------------------------
             F_N = -F_g;

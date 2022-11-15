@@ -84,9 +84,11 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     hyperparams.facteur_delta_t = 10; % factor by which the time step is divided when a collision occurs
     hyperparams.delta_t_initial = 1e-3; % s
     hyperparams.n_delta_t_initial = 100; % nombre de delta_t_initial pour la simulation
+    hyperparams.n_delta_t_max = 1000; % nombre de delta_t maximum pour la simulation
     hyperparams.delta_t_between_frames = 5e-2; % temps entre chaque frame
     hyperparams.max_travel_distance_near_collision = 2.5e-4; % m
     hyperparams.close_enough = 5e-4; % approximation by which if below it is consider to be 0
+    hyperparams.debugMode = false; % if true, the simulation will display debug information
     problem.hyperparams = hyperparams;
     % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------

@@ -7,6 +7,7 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     v_i = problem.dice.q(4:6);
     omega_i = problem.dice.q(7:9);
     close_enough = problem.hyperparams.close_enough;
+    debugMode = problem.hyperparams.debugMode;
 
     quaternion_rotation = problem.dice.q(10:13);
     quaternion_rotation = quaternion_rotation/norm(quaternion_rotation);
@@ -69,7 +70,9 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     % -------- Calcul de la nouvelle rotation ---------------------------
     omega_f = omega_i + I_inv_a * cross(r_a_p, J);
     % -------- Fin Calcul de la nouvelle rotation -----------------------
-    printf(" omega_f = %f, %f, %f \t v_f = %f, %f, %f \n", omega_f(1), omega_f(2), omega_f(3), v_f(1), v_f(2), v_f(3));
+    if (debugMode)
+        printf(" omega_f = %f, %f, %f \t v_f = %f, %f, %f \n", omega_f(1), omega_f(2), omega_f(3), v_f(1), v_f(2), v_f(3));
+    endif
 
     qs = [
         problem.dice.q(1);

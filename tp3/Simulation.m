@@ -29,6 +29,7 @@ epsilon = [
 ];
 
 % Premiere essai de simulation avec une prediction de 100 timestep
+debugMode = problem.hyperparams.debugMode;
 n_deltaT = problem.hyperparams.n_delta_t_initial; % number of time steps
 DeltaT = problem.hyperparams.delta_t_initial; % time step
 max_travel_distance_near_collision = problem.hyperparams.max_travel_distance_near_collision; % maximum distance traveled by timestep when it is near a collision
@@ -47,7 +48,7 @@ while(true)
     sommets = {CalculSommetsGlobal(problem)};
 
     erreurMaximalParDeltaT = epsilon/n_deltaT;
-
+if (debugMode)
 %------------------------------------------------------------------------------------------------------------------------------
     figure(2);
     sommets_plot = sommets{1};
@@ -94,11 +95,12 @@ while(true)
     hold on;
     pause(0.01);
 %------------------------------------------------------------------------------------------------------------------------------
+endif
 
     while (!StopCondition(problem))
 
 %------------------------------------------------------------------------------------------------------------------------------
-if (abs(last_time - t_i) >= problem.hyperparams.delta_t_between_frames)
+if (debugMode && abs(last_time - t_i) >= problem.hyperparams.delta_t_between_frames)
     last_time = t_i;
     sommets_plot = sommets{end};
     x_plot = [sommets_plot(1,:)];
@@ -147,7 +149,7 @@ endif
             problem.dice.q = old_q_i;
         endif
 
-        %update delta_t to travel a distance of epsilon by timestep
+        %update delta_t to travel a distance of max_travel_distance_near_collision by timestep
         if (problem.dice.q(3) < 2*R_min)
             DeltaT = max_travel_distance_near_collision/(max(abs(problem.dice.q(4:6))) + R_min * max(abs(problem.dice.q(7:9))));
         else
@@ -188,24 +190,22 @@ endif
     end
 
     % -------------------------------Fin Simulation -----------------------------------------
-    break;
-    % % calcul erreur comis
-    % erreur_comis = erreurMaximalParDeltaT .* length(t);
-    % erreurEstValide = true;
-    % for i = 1:length(erreur_comis)
-    %     if (erreur_comis(i) > epsilon(i))
-    %         erreurEstValide = false;
-    %     end
-    % end
-
-    % % si erreur comis < epsilon alors on arrete la simulation
-    % if(erreurEstValide)
-    %     break;
-    % end
-
-    % % sinon on augmente le nombre de pas de temps et diminue delta t
-    % n_deltaT = 2*length(t) + 1;
-    % DeltaT = t(end)/n_deltaT;
+    if (size(t, 2) > problem.hyperparams.n_delta_t_initial)
+        break;
+    else
+        DeltaT = DeltaT/2;
+    endif
 end
+
+    nPoint = size(t,2);
+    stepFactor = 1;
+    while(nPoint/stepFactor > problem.hyperparams.n_delta_t_max)
+        stepFactor = stepFactor/2;
+    end
+    t = t(1:stepFactor:end);
+    x = x(1:stepFactor:end);
+    y = y(1:stepFactor:end);
+    z = z(1:stepFactor:end);
+    sommets = sommets(1:stepFactor:end);
 
 endfunction
