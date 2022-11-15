@@ -24,17 +24,20 @@ function [delta_q] =  g(problem, q, t)
     quat = quat/norm(quat); % normalisation du quaternion pour eviter les erreurs numeriques
     omega_quat = [0; w_x; w_y; w_z];
     delta_quat = 1/2 * QProduit(quat, omega_quat);
+    forces = Forces(problem);
+    acceleration = Acceleration(problem, forces);
+    acceleration_angulaire = AccelerationAngulaire(problem, forces);
 
     delta_q = [ 
         v_x; % dx/dt
         v_y; % dy/dt
         v_z; % dz/dt
-        0; % dv_x/dt
-        0; % dv_y/dt
-        -problem.constants.g; % dv_z/dt
-        0; % dw_x/dt
-        0; % dw_y/dt
-        0; % dw_z/dt
+        acceleration(1); % dv_x/dt
+        acceleration(2); % dv_y/dt
+        acceleration(3); % dv_z/dt
+        acceleration_angulaire(1); % dw_x/dt
+        acceleration_angulaire(2); % dw_y/dt
+        acceleration_angulaire(3); % dw_z/dt
         delta_quat(1); % dquat_w/dt
         delta_quat(2); % dquat_x/dt
         delta_quat(3); % dquat_y/dt

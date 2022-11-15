@@ -86,14 +86,14 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     hyperparams.n_delta_t_initial = 100; % nombre de delta_t_initial pour la simulation
     hyperparams.delta_t_between_frames = 5e-2; % temps entre chaque frame
     hyperparams.max_travel_distance_near_collision = 2.5e-4; % m
+    hyperparams.close_enough = 5e-4; % approximation by which if below it is consider to be 0
     problem.hyperparams = hyperparams;
     % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------
 
-
     [t x y z all_sommets] = Simulation(problem);
 
     face = CalculFaceObtenue(problem);
-    sommets = all_sommets(end); % Position finale de chaun des 8 sommets
+    sommets = all_sommets{end}; % Position finale de chaun des 8 sommets
 
 endfunction

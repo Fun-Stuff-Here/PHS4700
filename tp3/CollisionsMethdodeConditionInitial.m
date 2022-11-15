@@ -6,6 +6,7 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     % -------- Linking the problem structure to the local variables ------
     v_i = problem.dice.q(4:6);
     omega_i = problem.dice.q(7:9);
+    close_enough = problem.hyperparams.close_enough;
 
     quaternion_rotation = problem.dice.q(10:13);
     quaternion_rotation = quaternion_rotation/norm(quaternion_rotation);
@@ -14,7 +15,7 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     if size(cornersInColision, 2) == 1 % if there is only one corner in collision
         P = cornersInColision;
     else % if there are more than one corner in collision (it should not happen) but doing average if it happens
-        P = sum(cornersInColision)/size(cornersInColision, 2);
+        P = [sum(cornersInColision(1,:)); sum(cornersInColision(2,:)); sum(cornersInColision(3,:));]/size(cornersInColision, 2); % P is the center of the edge or face
     endif
     quat_corner = [0; P(1); P(2); P(3)];
     r_a_p = QRotation(quaternion_rotation, quat_corner)(2:4);
@@ -68,20 +69,22 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     % -------- Calcul de la nouvelle rotation ---------------------------
     omega_f = omega_i + I_inv_a * cross(r_a_p, J);
     % -------- Fin Calcul de la nouvelle rotation -----------------------
+    printf(" omega_f = %f, %f, %f \t v_f = %f, %f, %f \n", omega_f(1), omega_f(2), omega_f(3), v_f(1), v_f(2), v_f(3));
 
-    v_f_a_p = v_f + cross(omega_f, r_a_p);
-    v_r_f = dot(n_hat, v_f_a_p);
-    epsilon_f = -v_r_f/v_r;
-    fprintf('epsilon_f= (%8.4f)  \n', epsilon_f);
-    % -------- Mettre a jour le vecteur d'etat --------------------------
-    problem.dice.q(4) = v_f(1);
-    problem.dice.q(5) = v_f(2);
-    problem.dice.q(6) = v_f(3);
-    problem.dice.q(7) = omega_f(1);
-    problem.dice.q(8) = omega_f(2);
-    problem.dice.q(9) = omega_f(3);
-    % -------- Fin Mettre a jour le vecteur d'etat ----------------------
-
-    qs = problem.dice.q;
+    qs = [
+        problem.dice.q(1);
+        problem.dice.q(2);
+        problem.dice.q(3) + close_enough;
+        v_f(1);
+        v_f(2);
+        v_f(3);
+        omega_f(1);
+        omega_f(2);
+        omega_f(3);
+        problem.dice.q(10);
+        problem.dice.q(11);
+        problem.dice.q(12);
+        problem.dice.q(13);
+    ];
 
 endfunction

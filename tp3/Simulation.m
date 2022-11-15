@@ -39,12 +39,11 @@ last_time = 0;
 while(true)
     % -------------------------------Simulation ---------------------------------------------
     % Initialisation
-    q_i = problem.dice.q;
     t_i = 0;
     t = [t_i];
-    x = [q_i(1)];
-    y = [q_i(2)];
-    z = [q_i(3)];
+    x = [problem.dice.q(1)];
+    y = [problem.dice.q(2)];
+    z = [problem.dice.q(3)];
     sommets = {CalculSommetsGlobal(problem)};
 
     erreurMaximalParDeltaT = epsilon/n_deltaT;
@@ -142,68 +141,71 @@ if (abs(last_time - t_i) >= problem.hyperparams.delta_t_between_frames)
 endif
 
 %------------------------------------------------------------------------------------------------------------------------------
-
-        old_q_i = q_i;
+        if (!DetectCollision(problem)) % guard for not having a station in collision
+            old_q_i = problem.dice.q;
+        else
+            problem.dice.q = old_q_i;
+        endif
 
         %update delta_t to travel a distance of epsilon by timestep
-        if (q_i(3) < 2*R_min)
-            DeltaT = max_travel_distance_near_collision/(max(abs(q_i(4:6)) + R_min * max(abs(q_i(7:9)))));
+        if (problem.dice.q(3) < 2*R_min)
+            DeltaT = max_travel_distance_near_collision/(max(abs(problem.dice.q(4:6))) + R_min * max(abs(problem.dice.q(7:9))));
         else
             DeltaT = problem.hyperparams.delta_t_initial;
         endif
 
-        [q_i m Err]= SEDRK4t0ER(problem, q_i, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
-        problem.dice.q = q_i;
+        [problem.dice.q m Err]= SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
         % Detection collision and backtracking
         if (DetectCollision(problem))
-            q_i = old_q_i;
-            old_t_i = t_i;
             problem.dice.q = old_q_i;
+            old_t_i = t_i;
             collision_error = erreurMaximalParDeltaT/facteur_erreur_collision;
             collision_deltaT = DeltaT/facteur_delta_t;
             while (!DetectCollision(problem)) % get has close as possible to the collision
-                old_q_i = q_i;
-                problem.dice.q = q_i;
-                [q_i m Err]= SEDRK4t0ER(problem, q_i, t_i, t_i + collision_deltaT, collision_error, 'g');
+                if (!DetectCollision(problem)) % guard for not having a station in collision
+                    old_q_i = problem.dice.q;
+                else
+                    problem.dice.q = old_q_i;
+                endif
+                [problem.dice.q m Err]= SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + collision_deltaT, collision_error, 'g');
                 t_i = t_i + collision_deltaT;
             end
             sommet_i = FindCornerInCollisionIndex(problem);
             % Backtracking
             problem.dice.q = old_q_i;
             % the collision is now happening
-            q_i = CollisionsMethdodeConditionInitial(problem, sommet_i);
-            problem.dice.q = q_i;
+            problem.dice.q = CollisionsMethdodeConditionInitial(problem, sommet_i);
             t_i = old_t_i;
         endif
 
         % update variables
         t_i = t_i + DeltaT;
         t(end + 1) = t_i;
-        x(end + 1) = q_i(1);
-        y(end + 1) = q_i(2);
-        z(end + 1) = q_i(3);
+        x(end + 1) = problem.dice.q(1);
+        y(end + 1) = problem.dice.q(2);
+        z(end + 1) = problem.dice.q(3);
         sommets(end + 1) = CalculSommetsGlobal(problem);
     end
 
     % -------------------------------Fin Simulation -----------------------------------------
+    break;
+    % % calcul erreur comis
+    % erreur_comis = erreurMaximalParDeltaT .* length(t);
+    % erreurEstValide = true;
+    % for i = 1:length(erreur_comis)
+    %     if (erreur_comis(i) > epsilon(i))
+    %         erreurEstValide = false;
+    %     end
+    % end
 
-    % calcul erreur comis
-    erreur_comis = erreurMaximalParDeltaT .* length(t);
-    erreurEstValide = true;
-    for i = 1:length(erreur_comis)
-        if (erreur_comis(i) > epsilon(i))
-            erreurEstValide = false;
-        end
-    end
+    % % si erreur comis < epsilon alors on arrete la simulation
+    % if(erreurEstValide)
+    %     break;
+    % end
 
-    % si erreur comis < epsilon alors on arrete la simulation
-    if(erreurEstValide)
-        break;
-    end
-
-    % sinon on augmente le nombre de pas de temps et diminue delta t
-    n_deltaT = 2*length(t) + 1;
-    DeltaT = t(end)/n_deltaT;
+    % % sinon on augmente le nombre de pas de temps et diminue delta t
+    % n_deltaT = 2*length(t) + 1;
+    % DeltaT = t(end)/n_deltaT;
 end
 
 endfunction
