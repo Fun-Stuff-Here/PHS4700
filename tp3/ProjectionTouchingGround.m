@@ -19,7 +19,7 @@ function groundProjection = ProjectionTouchingGround(problem)
     if (size(vertex,2) < 2) % 0D projection
         groundProjection.nDims = 0;
         groundProjection.origin = vertex;
-    else if (size(vertex,2) == 2) % 1D projection
+    elseif (size(vertex,2) == 2) % 1D projection
         u_hat = (vertex(:,2) - vertex(:,1))/norm(vertex(:,2) - vertex(:,1));
         groundProjection.nDims = 1;
         groundProjection.origin = vertex(:,1);
@@ -34,7 +34,7 @@ function groundProjection = ProjectionTouchingGround(problem)
             u_hat = (vertex(:,1) - vertex(:,3))/norm(vertex(:,1) - vertex(:,3));
             t_hat = (vertex(:,2) - vertex(:,3))/norm(vertex(:,2) - vertex(:,3));
             groundProjection.origin = vertex(:,3);
-        else if (abs(l-norm(r_1_3)) > close_enough) % vertex 2 is the hypotenuse
+        elseif (abs(l-norm(r_1_3)) > close_enough) % vertex 2 is the hypotenuse
             u_hat = (vertex(:,1) - vertex(:,2))/norm(vertex(:,1) - vertex(:,2));
             t_hat = (vertex(:,3) - vertex(:,2))/norm(vertex(:,3) - vertex(:,2));
             groundProjection.origin = vertex(:,2);
@@ -46,4 +46,5 @@ function groundProjection = ProjectionTouchingGround(problem)
         groundProjection.nDims = 2;
         groundProjection.unitVectors = [u_hat, t_hat];
     endif
+
 endfunction

@@ -61,5 +61,5 @@ for vit=1:4
   fprintf('Position finale du dé    (%8.4f,%8.4f,%8.4f)  m \n',xx(sz),yy(sz),zz(sz));
   fprintf('\n\n');
   hold;
-  pause;
+  pause(5);
 end

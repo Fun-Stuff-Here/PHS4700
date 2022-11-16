@@ -27,6 +27,9 @@ function [delta_q] =  g(problem, q, t)
     forces = Forces(problem);
     acceleration = Acceleration(problem, forces);
     acceleration_angulaire = AccelerationAngulaire(problem, forces);
+    if (problem.hyperparams.debugMode && problem.dice.NCollision > problem.hyperparams.max_nCollision_before_rolling)
+        printf(" acceleration = %f %f %f \t acceleration_angulaire = %f %f %f \n", acceleration(1), acceleration(2), acceleration(3), acceleration_angulaire(1), acceleration_angulaire(2), acceleration_angulaire(3));
+    endif
 
     delta_q = [ 
         v_x; % dx/dt

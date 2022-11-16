@@ -60,6 +60,7 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
         R(4) % quaternion rotation z   13
         ];
     dice.q = q;
+    dice.NCollision = 0;
     % ------------------ Vecteur d'etat q -----------------------------
     problem.dice = dice;
     % ------------------ Fin Paramètres du cube -----------------------
@@ -81,14 +82,15 @@ function [face t x y z sommets] = Devoir3(Pos0, MatR0, V0, W0)
     % ------------------ HyperParamètres de la simulation -------------
     hyperparams = {};
     hyperparams.facteur_erreur_collision = 10; % factor by which the erreur is divided when a collision occurs
-    hyperparams.facteur_delta_t = 10; % factor by which the time step is divided when a collision occurs
-    hyperparams.delta_t_initial = 1e-3; % s
+    hyperparams.facteur_delta_t = 5; % factor by which the time step is divided when a collision occurs
+    hyperparams.delta_t_initial = 1e-2; % s
     hyperparams.n_delta_t_initial = 100; % nombre de delta_t_initial pour la simulation
     hyperparams.n_delta_t_max = 1000; % nombre de delta_t maximum pour la simulation
     hyperparams.delta_t_between_frames = 5e-2; % temps entre chaque frame
     hyperparams.max_travel_distance_near_collision = 2.5e-4; % m
-    hyperparams.close_enough = 5e-4; % approximation by which if below it is consider to be 0
+    hyperparams.close_enough = 1e-3; % approximation by which if below it is consider to be 0
     hyperparams.debugMode = false; % if true, the simulation will display debug information
+    hyperparams.max_nCollision_before_rolling = 100; % number of collision before applying friction
     problem.hyperparams = hyperparams;
     % ------------------ Fin HyperParamètres de la simulation ---------
     % ------------------ Fin Initialisation des variables -------------

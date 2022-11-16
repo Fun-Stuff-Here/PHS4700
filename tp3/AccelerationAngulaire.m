@@ -7,7 +7,7 @@ function alpha = AccelerationAngulaire(problem, forces)
     close_enough = problem.hyperparams.close_enough;
     R_min = problem.dice.R_min;
 % ------------------------------ Fin Problem Definition -----------------------------
-    if (abs(v_dice(3)) < close_enough && abs(position(3) - R_min) < close_enough) % Si le dice est au sol et glisse
+    if (problem.dice.NCollision > problem.hyperparams.max_nCollision_before_rolling) % Si le dice est au sol et glisse
         moment_forces = MomentForces(problem, forces);
         alpha = I_inv * moment_forces;
     else

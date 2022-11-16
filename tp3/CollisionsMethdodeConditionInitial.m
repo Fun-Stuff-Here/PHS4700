@@ -6,7 +6,7 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     % -------- Linking the problem structure to the local variables ------
     v_i = problem.dice.q(4:6);
     omega_i = problem.dice.q(7:9);
-    close_enough = problem.hyperparams.close_enough;
+    max_travel_distance_near_collision = problem.hyperparams.max_travel_distance_near_collision;
     debugMode = problem.hyperparams.debugMode;
 
     quaternion_rotation = problem.dice.q(10:13);
@@ -25,7 +25,7 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     v_b_p = problem.sol.v;
     epsilon = problem.dice.epsilon;
     R = QuaternionToMatrix(quaternion_rotation);
-    I_inv_a = R * problem.dice.I_inv * inv(R);
+    I_inv_a = problem.dice.I_inv;
     I_inv_b = problem.sol.I_inv;
     n_hat = problem.sol.n_hat;
     r_b_p = [0; 0; 0];
@@ -71,13 +71,13 @@ function qs = CollisionsMethdodeConditionInitial(problem, sommet_i)
     omega_f = omega_i + I_inv_a * cross(r_a_p, J);
     % -------- Fin Calcul de la nouvelle rotation -----------------------
     if (debugMode)
-        printf(" omega_f = %f, %f, %f \t v_f = %f, %f, %f \n", omega_f(1), omega_f(2), omega_f(3), v_f(1), v_f(2), v_f(3));
+        printf("NCollison =%f, omega_f = %f, %f, %f \t v_f = %f, %f, %f \n",problem.dice.NCollision, omega_f(1), omega_f(2), omega_f(3), v_f(1), v_f(2), v_f(3));
     endif
 
     qs = [
         problem.dice.q(1);
         problem.dice.q(2);
-        problem.dice.q(3) + close_enough;
+        problem.dice.q(3) + max_travel_distance_near_collision;
         v_f(1);
         v_f(2);
         v_f(3);

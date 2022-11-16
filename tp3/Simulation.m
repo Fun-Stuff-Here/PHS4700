@@ -50,7 +50,7 @@ while(true)
     erreurMaximalParDeltaT = epsilon/n_deltaT;
 if (debugMode)
 %------------------------------------------------------------------------------------------------------------------------------
-    figure(2);
+    figure();
     sommets_plot = sommets{1};
     x_plot = [sommets_plot(1,:)];
     y_plot = [sommets_plot(2,:)];
@@ -143,40 +143,43 @@ if (debugMode && abs(last_time - t_i) >= problem.hyperparams.delta_t_between_fra
 endif
 
 %------------------------------------------------------------------------------------------------------------------------------
-        if (!DetectCollision(problem)) % guard for not having a station in collision
-            old_q_i = problem.dice.q;
-        else
-            problem.dice.q = old_q_i;
-        endif
+        old_q_i = problem.dice.q;
 
         %update delta_t to travel a distance of max_travel_distance_near_collision by timestep
-        if (problem.dice.q(3) < 2*R_min)
+        if (problem.dice.q(3) < 1.2*R_min && problem.dice.NCollision <= problem.hyperparams.max_nCollision_before_rolling)
             DeltaT = max_travel_distance_near_collision/(max(abs(problem.dice.q(4:6))) + R_min * max(abs(problem.dice.q(7:9))));
         else
             DeltaT = problem.hyperparams.delta_t_initial;
         endif
 
-        [problem.dice.q m Err]= SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
+        [problem.dice.q m Err] = SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
         % Detection collision and backtracking
         if (DetectCollision(problem))
+            if (debugMode && problem.dice.NCollision > problem.hyperparams.max_nCollision_before_rolling)
+                printf("omega = %f %f %f \t v = %f %f %f \n", problem.dice.q(7), problem.dice.q(8), problem.dice.q(9), problem.dice.q(4), problem.dice.q(5), problem.dice.q(6));
+            endif
             problem.dice.q = old_q_i;
             old_t_i = t_i;
             collision_error = erreurMaximalParDeltaT/facteur_erreur_collision;
             collision_deltaT = DeltaT/facteur_delta_t;
-            while (!DetectCollision(problem)) % get has close as possible to the collision
+            while (!DetectCollision(problem) && problem.dice.NCollision <= problem.hyperparams.max_nCollision_before_rolling) % get has close as possible to the collision
                 if (!DetectCollision(problem)) % guard for not having a station in collision
                     old_q_i = problem.dice.q;
                 else
                     problem.dice.q = old_q_i;
                 endif
-                [problem.dice.q m Err]= SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + collision_deltaT, collision_error, 'g');
+                [problem.dice.q m Err] = SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + collision_deltaT, collision_error, 'g');
                 t_i = t_i + collision_deltaT;
             end
+            if (problem.dice.NCollision > problem.hyperparams.max_nCollision_before_rolling)
+                [problem.dice.q m Err] = SEDRK4t0ER(problem, problem.dice.q, t_i, t_i + DeltaT, erreurMaximalParDeltaT, 'g');
+            endif
             sommet_i = FindCornerInCollisionIndex(problem);
             % Backtracking
             problem.dice.q = old_q_i;
             % the collision is now happening
             problem.dice.q = CollisionsMethdodeConditionInitial(problem, sommet_i);
+            problem.dice.NCollision = problem.dice.NCollision + 1;
             t_i = old_t_i;
         endif
 
@@ -193,14 +196,14 @@ endif
     if (size(t, 2) > problem.hyperparams.n_delta_t_initial)
         break;
     else
-        DeltaT = DeltaT/2;
+        problem.hyperparams.n_delta_t_initial = problem.hyperparams.n_delta_t_initial/2;
     endif
 end
 
     nPoint = size(t,2);
     stepFactor = 1;
     while(nPoint/stepFactor > problem.hyperparams.n_delta_t_max)
-        stepFactor = stepFactor/2;
+        stepFactor = stepFactor * 2;
     end
     t = t(1:stepFactor:end);
     x = x(1:stepFactor:end);

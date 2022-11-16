@@ -12,7 +12,7 @@ function a = Acceleration(problem, forces)
     close_enough = problem.hyperparams.close_enough;
     R_min = problem.dice.R_min;
 % ------------------------------ Fin Problem Definition -----------------------------
-    if (abs(v_dice(3)) < close_enough && abs(position(3) - R_min) < close_enough) % Si le dice est au sol et glisse
+    if (problem.dice.NCollision > problem.hyperparams.max_nCollision_before_rolling) % Si le dice est au sol et glisse
         a = (F_g + F_N + F_f_c + F_f_s)/m;
     else
         a = [0; 0; -g];
