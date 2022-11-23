@@ -20,21 +20,18 @@ function [doesIntersect ti intersection_points] = LineSphereIntersect(problem, l
         doesIntersect = false;
         ti = [];
         intersection_points = [];
-        return
     endif
 
     if discriminant == 0
         doesIntersect = true;
         ti = [(-b)/(2*a)];
         intersection_points = [p + ti(1)*u];
-        return
     endif
 
     if discriminant > 0
         doesIntersect = true;
         ti = [(-b + sqrt(discriminant))/(2*a), (-b - sqrt(discriminant))/(2*a)];
-        intersection_points = [p + ti(1)*u; p + ti(2)*u];
-        return
+        intersection_points = {p + ti(1)*u, p + ti(2)*u};
     endif
 
 endfunction

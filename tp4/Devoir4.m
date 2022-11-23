@@ -30,8 +30,8 @@ function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
 % ---------------------------------Planes ---------------------------------%
     plane_1 = {};
     plane_1.color = color.cyan;
-    plane_1.plane_normal = [1; 0; 0];
-    plane_1.plane_distance = -box.a/2;
+    plane_1.plane_normal = [-1; 0; 0];
+    plane_1.plane_distance = box.a/2;
 
     plane_2 = {};
     plane_2.color = color.blue;
@@ -40,8 +40,8 @@ function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
 
     plane_3 = {};
     plane_3.color = color.orange;
-    plane_3.plane_normal = [0; 1; 0];
-    plane_3.plane_distance = -box.b/2;
+    plane_3.plane_normal = [0; -1; 0];
+    plane_3.plane_distance = box.b/2;
 
     plane_4 = {};
     plane_4.color = color.red;
@@ -50,7 +50,7 @@ function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
 
     plane_5 = {};
     plane_5.color = color.magenta;
-    plane_5.plane_normal = [0; 0; 1];
+    plane_5.plane_normal = [0; 0; -1];
     plane_5.plane_distance = 0;
 
     plane_6 = {};
