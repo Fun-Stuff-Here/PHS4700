@@ -1,12 +1,14 @@
-function [doesRebound doesTransmit doesReflect point normal color] = GetNextRebound(problem, line)
+function [doesRebound doesTransmit doesReflect point normal color isEnteringSphere] = GetNextRebound(problem, line)
 
     planes = problem.planes;
+    u = line.line_direction;
 
     color = line.color;
     closest_distance = inf;
     point = [0; 0; 0];
     doesTransmit = false;
     doesReflect = false;
+    isEnteringSphere = false;
 
     % Find intersection of line with each plane
     for i = 1:length(planes)
@@ -28,7 +30,11 @@ function [doesRebound doesTransmit doesReflect point normal color] = GetNextRebo
             if distances(i) > 0 && distances(i) < closest_distance
                 closest_distance = distances(i);
                 point = intersection_points{i};
-                normal = (point - problem.sphere.pos)/norm(point - problem.sphere.pos);
+                r = point - problem.sphere.pos;
+                normal = dot(r, u)/abs(dot(r, u)) * (r)/norm(r);
+                if dot(r, u) < 0
+                    isEnteringSphere = true;
+                end
                 doesReflect = true;
                 doesTransmit = true;
             end

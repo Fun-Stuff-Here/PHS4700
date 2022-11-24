@@ -1,4 +1,4 @@
-function [reflected_ray] = Reflect(ray, normal, point)
+function [reflected_ray] = Reflect(problem, ray, normal, point)
 
     i = normal/norm(normal);
     u_i = ray.line_direction/norm(ray.line_direction);
