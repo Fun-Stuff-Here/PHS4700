@@ -92,6 +92,11 @@ function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
     rays = GenerateInitialRays(problem);
     [finalPos faces] = RayTrace(problem, rays);
 
+    xi = [];
+    yi = [];
+    zi = [];
+    face = [];
+
     for i=1:length(finalPos)
         xi(i) = finalPos{i}(1);
         yi(i) = finalPos{i}(2);
