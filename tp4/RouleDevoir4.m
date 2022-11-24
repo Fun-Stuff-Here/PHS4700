@@ -21,7 +21,7 @@ for i=1:4
         nint = 1;
         next = 1.5;
     endif
-    [xi, yi, zi, face] = Devoir4(Robs, nint, next)
+    [xi, yi, zi, face] = Devoir4(Robs, nint, next);
     scatter3(xi, yi, zi, 8, face);
     pause(1);
 end

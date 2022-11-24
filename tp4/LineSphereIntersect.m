@@ -14,24 +14,25 @@ function [doesIntersect ti intersection_points] = LineSphereIntersect(problem, l
     b = 2*(x_0*u_x + y_0*u_y + z_0*u_z);
     c = u_x^2 + u_y^2 + u_z^2;
 
-    discriminant = b^2 - 4*a*c;
+    discriminant = real(b^2 - 4*a*c);
+    doesIntersect = false;
+    ti = {};
+    intersection_points = {};
 
     if discriminant < 0
-        doesIntersect = false;
-        ti = [];
-        intersection_points = [];
+        return;
     endif
 
     if discriminant == 0
         doesIntersect = true;
-        ti = [(-b)/(2*a)];
-        intersection_points = [p + ti(1)*u];
+        ti = {(-b)/(2*a)};
+        intersection_points = {p + ti{1}*u};
     endif
 
     if discriminant > 0
         doesIntersect = true;
-        ti = [(-b + sqrt(discriminant))/(2*a), (-b - sqrt(discriminant))/(2*a)];
-        intersection_points = {p + ti(1)*u, p + ti(2)*u};
+        ti = {(-b + real(sqrt(discriminant)))/(2*a), (-b - real(sqrt(discriminant)))/(2*a)};
+        intersection_points = {p + ti{1}*u, p + ti{2}*u};
     endif
 
 endfunction
