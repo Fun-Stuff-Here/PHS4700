@@ -10,9 +10,9 @@ function [doesIntersect ti intersection_points] = LineSphereIntersect(problem, l
     u_y = u(2);
     u_z = u(3);
 
-    a = x_0^2 + y_0^2 + z_0^2 - R^2;
+    a = u_x^2 + u_y^2 + u_z^2;
     b = 2*(x_0*u_x + y_0*u_y + z_0*u_z);
-    c = u_x^2 + u_y^2 + u_z^2;
+    c = x_0^2 + y_0^2 + z_0^2 - R^2;
 
     discriminant = real(b^2 - 4*a*c);
     doesIntersect = false;

@@ -1,4 +1,9 @@
 function rays = GenerateInitialRays(problem)
+
+    if (problem.hyperParam.debugMode)
+        problem.hyperParam.n_rayon_minimum = problem.hyperParam.n_rayon_minimum_debug;
+    endif
+
     rays = {};
 
     k = problem.param.R_obs;
@@ -20,18 +25,24 @@ function rays = GenerateInitialRays(problem)
             u = j_ray*ray_step;
             potentiel_ray_sphere_hit = t*i + u*j;
             if dot(potentiel_ray_sphere_hit, potentiel_ray_sphere_hit) > problem.sphere.R^2
-                continue
+                continue;
             end
             ray = {};
             ray.origin = problem.param.R_obs;
             ray.origin_direction = potentiel_ray_sphere_hit - problem.param.R_obs;
+            ray.origin_direction = ray.origin_direction/norm(ray.origin_direction);
             ray.color = nan;
             ray.distance = 0;
             ray.nRebound = 0;
             ray.line_direction = potentiel_ray_sphere_hit - problem.param.R_obs;
+            ray.line_direction = ray.line_direction/norm(ray.line_direction);
             ray.line_point = problem.param.R_obs;
             rays{end+1} = ray;
         end
     end
+
+    if (problem.hyperParam.debugMode)
+        printf("Nombre de rayons générés %d \n",length(rays));
+    endif
 
 endfunction

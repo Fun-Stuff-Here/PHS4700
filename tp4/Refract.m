@@ -21,11 +21,12 @@ function [isTotalReflection refracted_ray] = Refract(problem, ray, normal, point
         end
     endif
 
-
-    j = cross(i, u_i)/norm(cross(i, u_i));
+    j = cross(u_i, i);
+    j = j/norm(j);
     k = cross(i, j);
+    k = k/norm(k);
 
-    s_i = dot(u_i, k);
+    s_i = dot(k, u_i);
     s_t = n_i/n_t * s_i;
 
     u_t = -i*real(sqrt(1-s_t^2)) + k*s_t;

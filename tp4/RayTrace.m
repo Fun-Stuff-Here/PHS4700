@@ -3,7 +3,7 @@ function [finalPos faces] = RayTrace(problem, rays)
     stack = rays;
 
     finalPos = {};
-    faces = [];
+    faces = {};
 
     while ~isempty(stack)
 
@@ -11,14 +11,21 @@ function [finalPos faces] = RayTrace(problem, rays)
 
         if ray.nRebound >= problem.hyperParam.nRebondMax
             continue;
-        end
+        endif
 
         [doesRebound doesHitObject distance point normal color isEnteringSphere] = GetNextRebound(problem, ray);
+
+        if (problem.hyperParam.debugMode && (doesRebound || doesHitObject))
+            point1 = ray.line_point;
+            point2 = ray.line_point + ray.line_direction * distance;
+            plot3([point1(1),point2(1)], [point1(2),point2(2)], [point1(3),point2(3)], 'r');
+            hold on;
+        endif
 
         if doesHitObject
             total_distance = ray.distance + distance;
             finalPos{end+1} = ray.origin + total_distance * ray.origin_direction;
-            faces(end+1) = color;
+            faces{end+1} = color;
         elseif doesRebound
             ray.distance = ray.distance + distance;
             copy_ray = {};

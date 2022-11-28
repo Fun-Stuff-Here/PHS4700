@@ -18,8 +18,9 @@ function [doesRebound doesHitObject closest_distance point normal color isEnteri
             color = planes{i}.color;
             point = intersection_point;
             normal = planes{i}.plane_normal/norm(planes{i}.plane_normal);
+            normal = normal/norm(normal);
             doesHitObject = true;
-        end
+        endif
     end
 
     % find intersection with sphere
@@ -31,13 +32,14 @@ function [doesRebound doesHitObject closest_distance point normal color isEnteri
                 point = intersection_points{i};
                 r = point - problem.sphere.pos;
                 normal = dot(r, u)/abs(dot(r, u)) * (r)/norm(r);
+                normal = normal/norm(normal);
                 if dot(r, u) < 0
                     isEnteringSphere = true;
-                end
+                endif
                 doesHitObject = false;
-            end
+            endif
         end
-    end
+    endif
 
     doesRebound = closest_distance != inf;
 

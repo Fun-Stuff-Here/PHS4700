@@ -1,9 +1,14 @@
 function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
 
+    xi = [];
+    yi = [];
+    zi = [];
+    face = [];
+
     problem = {};
 % ---------------------------------Param ----------------------------------%
     param = {};
-    param.R_obs = Robs;
+    param.R_obs = [Robs(1); Robs(2); Robs(3)];
     param.n_int = nint;
     param.n_ext = next;
     problem.param = param;
@@ -73,29 +78,63 @@ function [xi, yi, zi, face] = Devoir4(Robs, nint, next)
     planes = {plane_1, plane_2, plane_3, plane_4, plane_5, plane_6};
     problem.planes = planes;
 % ---------------------------------Planes ---------------------------------%
+% -------------------------------hyperParam--------------------------------%
+    hyperParam = {};
+    hyperParam.n_rayon_minimum = 1000;
+    hyperParam.debugMode = false;
+    hyperParam.n_rayon_minimum_debug = 20;
+    hyperParam.epsilon = 1e-6;
+    hyperParam.nRebondMax = 4;
+    hyperParam.ndim = 3;
+    problem.hyperParam = hyperParam;
+% -------------------------------hyperParam--------------------------------%
+% ------------------------------- Graph -----------------------------------%
+    if (problem.hyperParam.debugMode)
+        debugFig = figure();
+        xlabel('x(cm)');
+        ylabel('y(cm)');
+        zlabel('z(cm)');
+        rad=8;
+        [x_sphere, y_sphere, z_sphere] = sphere(10);
+        xsphere=rad*x_sphere;
+        ysphere=rad*y_sphere;
+        zsphere=rad*z_sphere;
+        h=surf(xsphere, ysphere, zsphere);
+        set(h,'FaceAlpha',0.1,'FaceColor','none');
+        axis equal;
+        hold on;
+        aa=2;
+        bb=1;
+        cc=4;
+        Facexy=[bb bb -bb -bb bb];
+        Facexz=[0 cc cc 0 0];
+        Faceyx=[aa -aa -aa aa aa];
+        Faceyz=[0 0 cc cc 0];
+        Facezx=[aa -aa -aa aa aa];
+        Facezy=[bb bb -bb -bb bb];
+        line([-aa -aa -aa -aa -aa],Facexy,Facexz,'Color','c');
+        hold on;
+        line([aa aa aa aa aa],Facexy,Facexz,'Color','b');
+        hold on;
+        line(Faceyx,[-bb -bb -bb -bb -bb],Faceyz,'Color',[0.9290 0.6940 0.1250]);
+        hold on;
+        line(Faceyx,[bb bb bb bb bb],Faceyz,'Color','r');
+        hold on;
+        line(Facezx,Facezy,[0 0 0 0 0],'Color','m');
+        hold on;
+        line(Facezx,Facezy,[cc cc cc cc cc],'Color','g');
+        hold on;
+    endif
+% ------------------------------- Graph -----------------------------------%
 % -------------------------------Sphere------------------------------------%
     sphere = {};
     sphere.R = 8; % cm
     sphere.pos = [0; 0; 0]; % m
     problem.sphere = sphere;
 % -------------------------------Sphere------------------------------------%
-% -------------------------------hyperParam--------------------------------%
-    hyperParam = {};
-    hyperParam.n_rayon_minimum = 1000;
-    hyperParam.debugMode = true;
-    hyperParam.epsilon = 1e-6;
-    hyperParam.nRebondMax = 4;
-    hyperParam.ndim = 3;
-    problem.hyperParam = hyperParam;
-% -------------------------------hyperParam--------------------------------%
 
     rays = GenerateInitialRays(problem);
     [finalPos faces] = RayTrace(problem, rays);
-
-    xi = [];
-    yi = [];
-    zi = [];
-    face = [];
 
     for i=1:length(finalPos)
         xi(i) = finalPos{i}(1);
