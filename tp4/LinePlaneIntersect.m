@@ -6,6 +6,7 @@ function [doesIntersect t intersection_point] = LinePlaneIntersect(problem, plan
     p = line.line_point;
     u = line.line_direction;
 
+    intersection_point = [0; 0; 0];
     t = nan;
     doesIntersect = false;
 
