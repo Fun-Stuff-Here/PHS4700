@@ -8,6 +8,9 @@ function rays = GenerateInitialRays(problem)
 
     k = problem.param.R_obs;
     i  = [k(2); -k(1); 0];
+    if ( norm(i) == 0)  
+        i = [0; k(3); -k(2)];
+    endif
     j  = cross(k, i);
 
     k = k/norm(k);
